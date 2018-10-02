@@ -82,7 +82,7 @@
     params.resourceid = resourceid.value || '';
     var args = dealParams();
     var img = new Image(1, 1);
-    var src = 'http://localhost:8082/data/collection/log.gif?args=' + encodeURIComponent(args);
+    var src = 'http://localhost:8082/nstr/data/log.gif?args=' + encodeURIComponent(args);
     //alert(src);
     img.src = src;
   }
