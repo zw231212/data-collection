@@ -1,6 +1,7 @@
 package com.nstr.data.collection;
 
 
+import com.nstr.data.collection.model.pojo.ResourceComment;
 import com.nstr.data.collection.repository.ResourceCommentRepository;
 import javax.annotation.Resource;
 import javax.sql.DataSource;
@@ -10,9 +11,8 @@ import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-//@WebAppConfiguration
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration("classpath:conf/spring/spring.xml")
+@ContextConfiguration(locations = {"classpath:conf/spring/spring.xml"})
 public class SpringBaseTest {
 
   @Resource
@@ -22,7 +22,13 @@ public class SpringBaseTest {
 
   @Test
   public void testDS(){
+    ResourceComment rc = new ResourceComment();
+    rc.setAccount("123123");
+    rc.setResourceid("w12312312312");
+    rc.setContact("010-82338084");
+    rc.setContent("12312312312312222222222222222222222222222222222222");
     System.out.println(resourceCommentRepository);
+//    System.out.println(resourceCommentRepository.save(rc));
     System.out.println(dataSource);
     Assert.assertNotNull(dataSource);
   }

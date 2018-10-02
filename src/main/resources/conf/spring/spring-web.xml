@@ -12,9 +12,13 @@
     http://www.springframework.org/schema/context
     http://www.springframework.org/schema/context/spring-context-4.0.xsd">
     <!-- 自动注册组件 -->
-    <mvc:annotation-driven/>
     <!-- 通过扫描将带有@Controller注解的类交由spring容器管理并维护 -->
-    <context:component-scan base-package="com.nstr.data.collection"/>
+    <context:component-scan base-package="com.nstr.data.collection" use-default-filters="false">
+        <context:include-filter type="annotation" expression="org.springframework.stereotype.Controller" />
+        <context:include-filter type="annotation" expression="org.springframework.web.bind.annotation.RestController" />
+        <!--<context:exclude-filter type="annotation" expression="org.springframework.stereotype.Repository" />-->
+    </context:component-scan>
+    <mvc:annotation-driven />
     <!-- 配置视图解析器 如果不配置ViewResolver,Spring MVC默认使用
         org.springframework.web.servlet.view.InternalResourceViewResolver作为
         ViewResolver,而且prefix和suffix都为空 -->

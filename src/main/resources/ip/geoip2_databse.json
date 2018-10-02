@@ -1,8 +1,0 @@
-{
-  "dbs":{
-  "geoip2_country_database":"12312",
-  "geoip2_city_database":"E:/data/ip/GeoLite2-City.mmdb",
-  "geoip2_isp_database":"3123123",
-  "geoip2_anonymous_ip_database":"123123123"},
-  "selected":"geoip2_city_database"
-}

@@ -16,14 +16,18 @@
         http://www.springframework.org/schema/context
         http://www.springframework.org/schema/context/spring-context.xsd">
     <!-- 自动扫描该包，使SpringMVC认为包下用了@controller注解的类是控制器 -->
-    <context:component-scan base-package="com.nstr.data.collection"/>
 
     <!-- 1. 配置数据源 -->
-    <context:property-placeholder location="classpath:db.properties"/>
+    <context:component-scan base-package="com.nstr.data.collection">
+        <context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller" />
+        <context:exclude-filter type="annotation" expression="org.springframework.web.bind.annotation.RestController" />
+    </context:component-scan>
+
+    <context:property-placeholder location="classpath:db.properties" />
 
     <!--2. 数据库连接池-->
     <!-- Hikari Datasource -->
-    <bean id="dataSourceHikari" class="com.zaxxer.hikari.HikariDataSource" >
+    <bean id="dataSource" class="com.zaxxer.hikari.HikariDataSource" >
         <property name="driverClassName" value="${jdbc.driver}" />
         <property name="jdbcUrl" value="${jdbc.url}" />
         <property name="username" value="${jdbc.username}" />
@@ -46,17 +50,17 @@
     <!-- 2. 配置 JPA 的 EntityManagerFactory -->
     <bean id="entityManagerFactory"
       class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
-        <property name="dataSource" ref="dataSourceHikari"></property>
+        <property name="dataSource" ref="dataSource" />
         <property name="jpaVendorAdapter">
-            <bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter"></bean>
+            <bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter" />
         </property>
-        <property name="packagesToScan" value="com.nstr.data.collection.model.pojo"></property>
+        <property name="packagesToScan" value="com.nstr.data.collection.model.pojo" />
         <property name="jpaProperties">
             <props>
                 <!-- 生成的数据表的列的映射策略 -->
                 <prop key="hibernate.ejb.naming_strategy">org.hibernate.cfg.ImprovedNamingStrategy</prop>
                 <!-- hibernate 基本属性 -->
-                <prop key="hibernate.dialect">org.hibernate.dialect.MySQL5InnoDBDialect</prop>
+                <prop key="hibernate.dialect">org.hibernate.dialect.MySQLDialect</prop>
                 <prop key="hibernate.show_sql">true</prop>
                 <prop key="hibernate.format_sql">true</prop>
                 <prop key="hibernate.hbm2ddl.auto">update</prop>
@@ -70,13 +74,12 @@
         <property name="entityManagerFactory" ref="entityManagerFactory"/>
     </bean>
     <!-- 4. 配置支持注解的事务 -->
-    <tx:annotation-driven transaction-manager="transactionManager"/>
+    <tx:annotation-driven transaction-manager="transactionManager" />
 
     <!-- 5. 配置 SpringData -->
     <!-- 加入  jpa 的命名空间 -->
     <!-- base-package: 扫描 Repository Bean 所在的 package -->
-    <jpa:repositories base-package="com.nstr.data.collection.repository"
-      entity-manager-factory-ref="entityManagerFactory" repository-impl-postfix="Impl" ></jpa:repositories>
+    <jpa:repositories base-package="com.nstr.data.collection.repository" />
     <!-- 启动对@AspectJ（面向切面）注解的支持 -->
-    <aop:aspectj-autoproxy />
+    <!--<aop:aspectj-autoproxy />-->
 </beans>

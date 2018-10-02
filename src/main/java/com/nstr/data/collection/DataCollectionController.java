@@ -1,6 +1,8 @@
 package com.nstr.data.collection;
 
+import com.nstr.data.collection.model.CollectionData;
 import com.nstr.data.collection.util.IPAddressUtil;
+import com.nstr.data.collection.util.JSONUtil;
 import com.nstr.data.collection.util.URLUtil;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -28,10 +30,14 @@ public class DataCollectionController {
         //将其他的参数信息解析为map参数
         Map<String, Object> infos = URLUtil.parseArgs(args);
         System.out.println(infos);
-
         //使用jackson将map转换成bean
-
-
+        CollectionData cdata = null;
+        try {
+            cdata = JSONUtil.map2pojo(infos, CollectionData.class);
+        } catch (Exception e){
+          //转换发生异常，那就一个个设置?
+        }
+        System.out.println(cdata);
         //返回信息
         response.setHeader("Pragma", "No-cache");
         response.setHeader("Cache-Control", "no-cache");

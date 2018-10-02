@@ -19,7 +19,7 @@ public class JSONUtil {
         objectMapper.setPropertyNamingStrategy(PropertyNamingStrategy.SNAKE_CASE);
     }
     private JSONUtil() {}
-    public static ObjectMapper getInstance() {
+    public static ObjectMapper getObjectMapper() {
         return objectMapper;
     }
 
