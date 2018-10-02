@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/comment/resources")
+@RequestMapping("/comments/resources")
 public class ResourceCommentAPI {
 
   @Resource
@@ -38,7 +38,7 @@ public class ResourceCommentAPI {
     return APIResponse.successInstance(page);
   }
 
-  @RequestMapping("/list/{id}/get")
+  @RequestMapping("/detail/{id}/get")
   public APIResponse getDetail(
       @PathVariable(value = "id") Long id
       ){
