@@ -36,7 +36,7 @@ public class ResourceCommentServiceImpl implements ResourceCommentService {
     rc.setReferrer(cdata.getReferrer());
 
     rc.setTitle(cdata.getTitle());
-    rc.setClientLang(cdata.getNavlan());
+    rc.setClientLang(cdata.getLang());
 
     String ua = cdata.getUa();
     rc.setUa(ua);

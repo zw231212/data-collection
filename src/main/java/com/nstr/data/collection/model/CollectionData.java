@@ -17,7 +17,7 @@ public class CollectionData implements Serializable {
   private int width; //屏幕宽
   private String referrer; //网页referrer
   private String ua;//user-agent
-  private String navlan;//客户端语言
+  private String lang;//客户端语言
   private String keywords;//需要记录的查询关键词
 
   private String account; //账号

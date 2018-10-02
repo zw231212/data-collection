@@ -34,8 +34,7 @@ public class DataCollectionController {
     public void analysis(String args, HttpServletRequest request,
                          @RequestParam(value = "type",required = false,defaultValue = "geoip") String type,
                          HttpServletResponse response) throws IOException {
-		    //打印日志
-        //获取ip信息
+		    //打印日志，写入日志文件里面去
         String ipAddr = IPAddressUtil.getIpAddr(request);
         logger.info("数据请求：from: "+ipAddr+" , args:"+args);
         //将其他的参数信息解析为map参数
@@ -49,14 +48,10 @@ public class DataCollectionController {
             e.printStackTrace();
         }
 
-        System.out.println(cdata);
-
         if(cdata != null ){
-            System.out.println("===================================================");
             cdata.setIpaddr(ipAddr);
             //保存信息
             ResourceComment rc = resourceCommentService.save(cdata, type);
-            System.out.println(rc);
         }
 
         //返回信息
