@@ -3,7 +3,7 @@
       comment={
         "score":"", "contact":"",
         "content":"", "click_button":"",
-        "resource":"","userid":""
+        "resource":"","user":""
       };
   //Document对象数据
   if (document) {
@@ -46,7 +46,7 @@
           comment.resource = _maq[i][1];
           break;
         case '_setUser':
-          comment.userid = _maq[i][1];
+          comment.user = _maq[i][1];
           break;
         default:
           break;
@@ -76,10 +76,12 @@
     var content = document.getElementById(comment.content);
     var contact = document.getElementById(comment.contact);
     var resourceid = document.getElementById(comment.resource);
+    var userid = document.getElementById(comment.user);
     params.score = score.value || '';
     params.contact = contact.value || '';
     params.content = content.value || '';
     params.resourceid = resourceid.value || '';
+    params.userid = userid.value || '';
     var args = dealParams();
     var img = new Image(1, 1);
     var src = 'http://localhost:8082/nstr/data/log.gif?args=' + encodeURIComponent(args);

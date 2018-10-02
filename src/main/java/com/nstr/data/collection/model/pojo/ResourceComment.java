@@ -58,7 +58,7 @@ public class ResourceComment implements Serializable {
 
   //时间相关的数据
   @Column(name = "create_time")
-  private Long createTime = new Date().getTime();
+  private Long createTime;
 
   //用户代理数据获取得到的相关的数据
   @Column(name = "user_agent",length = 500)
