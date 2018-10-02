@@ -1,5 +1,4 @@
 (function () {
-    //alert(1);
     var params = {},
         comment={
           "score":"", "contact":"",
@@ -73,9 +72,11 @@
         var score = document.getElementById(comment.score);
         var content = document.getElementById(comment.content);
         var contact = document.getElementById(comment.contact);
+        var resourceid = document.getElementById(comment.resource);
         params.score = score.value || '';
         params.contact = contact.value || '';
         params.content = content.value || '';
+        params.resourceid = resourceid.value || '';
         var args = dealParams();
         var img = new Image(1, 1);
         var src = 'http://localhost:8082/data/collection/log.gif?args=' + encodeURIComponent(args);

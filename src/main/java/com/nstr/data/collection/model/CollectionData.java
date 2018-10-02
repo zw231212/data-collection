@@ -22,6 +22,7 @@ public class CollectionData {
   private String ua;//user-agent
   private String navlan;//客户端语言
   private String account; //账号
+  private String resourceid;//资源标识符id
   private List<String> keywords;//需要记录的查询关键词
 
 }
