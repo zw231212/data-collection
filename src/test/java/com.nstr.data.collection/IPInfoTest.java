@@ -15,7 +15,7 @@ public class IPInfoTest {
   public void testFindIP(){
     String ip = "124.207.169.10";
     long l1 = System.currentTimeMillis();
-    IPInfo ipInfo = IPInfoHelper.findIP(ip,"ipipnet");
+    IPInfo ipInfo = IPInfoHelper.findIP(ip,"geoip");
     long l2 = System.currentTimeMillis();
     System.out.println(ipInfo);
     System.out.println("所用时间："+(l2-l1) +" ms!");

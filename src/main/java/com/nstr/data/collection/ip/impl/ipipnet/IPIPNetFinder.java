@@ -12,7 +12,7 @@ public class IPIPNetFinder {
         IPInfo ipInfo = new IPInfo();
         ipInfo.setCountry(infos[0]);
         ipInfo.setProvince(infos[1]);
-        ipInfo.setRegion(infos[2]);
+        ipInfo.setCity(infos[2]);
         //ipInfo.setDesc(infos[3]);//第四个字段信息未名
         return ipInfo;
     }

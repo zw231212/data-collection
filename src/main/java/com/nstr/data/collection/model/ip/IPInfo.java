@@ -31,6 +31,6 @@ public class IPInfo implements Serializable{
          this.ip = ipStr;
          this.country = country;
          this.province = province;
-         this.region = region;
+         this.city = region;
     }
 }

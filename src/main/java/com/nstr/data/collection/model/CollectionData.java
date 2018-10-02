@@ -1,11 +1,13 @@
 package com.nstr.data.collection.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.io.Serializable;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
 @NoArgsConstructor
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class CollectionData implements Serializable {
 
   private String ipaddr; //ip地址

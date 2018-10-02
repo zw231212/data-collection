@@ -5,6 +5,12 @@ import com.nstr.data.collection.model.pojo.ResourceComment;
 
 public interface ResourceCommentService {
 
-  ResourceComment save(CollectionData collectionData);
+  /**
+   *
+   * @param collectionData
+   * @param type ip解析的类型，现在支持两种，将AppConstant里面的ipPluginNames
+   * @return
+   */
+  ResourceComment save(CollectionData collectionData, String type);
 
 }

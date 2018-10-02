@@ -38,6 +38,9 @@ public class ResourceComment implements Serializable {
   @Column(length = 500)
   private String referrer;
 
+  @Column(name = "client_lang")
+  private String clientLang;//客户端语言
+
   //评论的数据
   private String contact;
   @Column(columnDefinition = "text")

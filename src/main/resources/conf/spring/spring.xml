@@ -21,6 +21,7 @@
     <context:component-scan base-package="com.nstr.data.collection">
         <context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller" />
         <context:exclude-filter type="annotation" expression="org.springframework.web.bind.annotation.RestController" />
+        <!--<context:exclude-filter type="assignable" expression="com.nstr.data.collection.service.ResourceCommentService"/>-->
     </context:component-scan>
 
     <context:property-placeholder location="classpath:db.properties" />
@@ -79,7 +80,7 @@
     <!-- 5. 配置 SpringData -->
     <!-- 加入  jpa 的命名空间 -->
     <!-- base-package: 扫描 Repository Bean 所在的 package -->
-    <jpa:repositories base-package="com.nstr.data.collection.repository" />
+    <jpa:repositories base-package="com.nstr.data.collection.repository" repository-impl-postfix="Impl" />
     <!-- 启动对@AspectJ（面向切面）注解的支持 -->
-    <!--<aop:aspectj-autoproxy />-->
+    <aop:aspectj-autoproxy />
 </beans>
