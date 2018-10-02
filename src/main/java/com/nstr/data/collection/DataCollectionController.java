@@ -15,7 +15,7 @@ import java.util.Map;
 
 @Controller
 @RequestMapping("/data/collection")
-public class DataCollection {
+public class DataCollectionController {
 
     @RequestMapping(value = "/log.gif")
     public void analysis(String args, HttpServletRequest request,
