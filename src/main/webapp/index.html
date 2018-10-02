@@ -75,6 +75,7 @@
     _maq.push(['_setContact', "{{params.contact}}"]);      <br />
     _maq.push(['_setClickButton', "{{params.clickButton}}"]); <br />
     _maq.push(['_setResource', "{{params.resource}}"]);   <br />
+    _maq.push(['_setUser', "{{params.user}}"]);   <br />
 
     (function () {
         var ma = document.createElement('script');
@@ -105,7 +106,10 @@
                                <input type="text" class="form-control" placeholder="click标签" v-model="params.clickButton" />
                            </div>
                            <div class="col-md-6">
-                               <input type="text" class="form-control" placeholder="resource标签" v-model="params.resource" />
+                               <input type="text" class="form-control" placeholder="resourceid标签" v-model="params.resource" />
+                           </div>
+                           <div class="col-md-6">
+                               <input type="text" class="form-control" placeholder="userid标签" v-model="params.user" />
                            </div>
                        </div>
                    </div>
@@ -160,7 +164,8 @@
               "contact":"contact",
               "content":"content",
               "clickButton":"clickNode",
-              "resource":"resourceid"
+              "resource":"resourceid",
+              "user":"userid",
             },
         },
         ready:function () {
@@ -197,6 +202,7 @@
       _maq.push(['_setContact', infoVM.$data.params.contact]);
       _maq.push(['_setClickButton', infoVM.$data.params.clickButton]);
       _maq.push(['_setResource', infoVM.$data.params.resource]);
+      _maq.push(['_setUser', infoVM.$data.params.user]);
 
       (function () {
         var ma = document.createElement('script');

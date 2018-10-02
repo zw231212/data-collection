@@ -3,7 +3,7 @@
       comment={
         "score":"", "contact":"",
         "content":"", "click_button":"",
-        "resource":""
+        "resource":"","userid":""
       };
   //Document对象数据
   if (document) {
@@ -44,6 +44,9 @@
           break;
         case '_setResource':
           comment.resource = _maq[i][1];
+          break;
+        case '_setUser':
+          comment.userid = _maq[i][1];
           break;
         default:
           break;
