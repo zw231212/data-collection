@@ -13,6 +13,12 @@
         [v-cloak]{
             display: none;
         }
+        #apiDivArea pre {outline: 1px solid #ccc; padding: 5px; margin: 5px; height: 500px;}
+        .string { color: green; }
+        .number { color: darkorange; }
+        .boolean { color: blue; }
+        .null { color: magenta; }
+        .key { color: red; }
     </style>
 </head>
 <body>
@@ -143,13 +149,12 @@
             </pre>
         </div>
 
-        <div class="row">
+        <div class="row" id="apiDivArea">
             <div class="col-md-7">
                 <h6 style="color: blue;">评论数据获取</h6>
                 <input id="apiPath" class="form-control" v-model="apiPath" />
                 <br />
-                <pre class="form-control" rows="10">
-                    <code id="resultInfo"></code>
+                <pre class="form-control" id="resultInfo">
                 </pre>
             </div>
             <div class="col-md-5">
@@ -269,10 +274,16 @@
                 if(value == -1){
                   return;
                 }
-                this.apiPath = this.apis[value].api;
+                if(value == 0) {
+                  this.apiPath = this.apis[value].api + "?account=" + this.params.account;
+                }else if(value == 1){
+                  this.apiPath = this.apis[value].api.replace(/{id}/,7);
+                }
+
             },
             getCommentData:function(){
               this.$http.get(this.apiPath).then(function (resp) {
+                changeResponseInfoArea(resp.data);
                 console.log(resp)
               },function (err) {
                 console.log(err)
@@ -285,7 +296,33 @@
           hljs.highlightBlock(block);
         });
       }
+      function changeResponseInfoArea(json){
+        $('#resultInfo').html(syntaxHighlight(json));
+      }
 
+      //格式化显示json数据
+      function syntaxHighlight(json) {
+        if (typeof json != 'string') {
+          json = JSON.stringify(json, undefined, 2);
+        }
+        json = json.replace(/&/g, '&').replace(/</g, '<').replace(/>/g, '>');
+        return json.replace(/("(\\u[a-zA-Z0-9]{4}|\\[^u]|[^\\"])*"(\s*:)?|\b(true|false|null)\b|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?)/g, function(match) {
+          var cls = 'number';
+          if (/^"/.test(match)) {
+            if (/:$/.test(match)) {
+              cls = 'key';
+            } else {
+              cls = 'string';
+            }
+          } else if (/true|false/.test(match)) {
+            cls = 'boolean';
+          } else if (/null/.test(match)) {
+            cls = 'null';
+          }
+          return '<span class="' + cls + '">' + match + '</span>';
+        });
+      }
+      
       //在当前页面绑定
       var _maq = _maq || [];
       _maq.push(['_setAccount', infoVM.$data.params.account]);
