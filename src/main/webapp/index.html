@@ -40,6 +40,7 @@
     <div class="container" id="info-area">
         <div class="row">
            <div class="col-md-7">
+               <input type="hidden"  id="resourceid" value="nstr-123123-jjasdsjakk123"/>
                <span class="input-group-addon">分数 : </span>
                <div class="input-group">
                    <input type="text" class="form-control" placeholder="评论分数，这里是手写，但是在真正页面上需要有样式" id="score" />
@@ -116,15 +117,25 @@
         <div>
             <p>本系统的使用方式和piwik监测系统的使用是一样的，但是对于评论系统的地方，有一些规定的参数。在初始化的时候必须设置几个参数：
                 <br />
-                account:也就是展会的id，<br />
-                score:也就是score得分标签的id，<br />
-                contact:也就是contact联系方式标签的id，<br />
-                content:评论内容标签的id，<br />
-                clickButton：也就点击提交事件的button标签的id <br />
-                resource：也就资源标识符标签的id <br />
+                account:也就是展会的id，这是初始化的时候就设置了，不能更改<br />
+                score:也就是score得分标签的id，这是在每个页面评论的时候获取的<br />
+                contact:也就是contact联系方式标签的id，这是在每个页面评论的时候获取的联系方式<br />
+                content:评论内容标签的id，这是在评论的时候获取的评论的内容<br />
+                clickButton：也就点击提交事件的button标签的id，这个是在写网页的时候，对评论提交的标签的时候设置的id<br />
+                resource：也就资源标识符标签的id，就是说在当前页面必须得有一个标签的id是这里设置的值，并且它的值表示的是当前页面数据的id信息<br />
             </p>
             <hr />
-            
+            <p>
+                请求头大小设置的问题：如果默认的话，将不能携带太多的数据，需要设置maxHttpHeaderSize，我在本地使用tomcat运行，设置成了1M大小，如下所示：
+            </p>
+            <pre>
+                <code>
+&lt;Connector port="8080" protocol="HTTP/1.1"
+           connectionTimeout="20000"
+           redirectPort="8443" maxHttpHeaderSize="1048576" maxPostSize="4194304"
+/&gt;
+                </code>
+            </pre>
         </div>
     </div>
     <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
@@ -167,7 +178,6 @@
             },
             getInitCode:function(){
                 let innerText = $("#codeInfo").html();
-                console.log(innerText)
                 $("#codeArea").html(innerText);
                 highlightCode();
             }
@@ -178,6 +188,23 @@
           hljs.highlightBlock(block);
         });
       }
+
+      var _maq = _maq || [];
+      _maq.push(['_setAccount', infoVM.$data.params.account]);
+      _maq.push(['_setScore', infoVM.$data.params.score]);
+      _maq.push(['_setContent', infoVM.$data.params.content]);
+      _maq.push(['_setContact', infoVM.$data.params.contact]);
+      _maq.push(['_setClickButton', infoVM.$data.params.clickButton]);
+      _maq.push(['_setResource', infoVM.$data.params.resource]);
+
+      (function () {
+        var ma = document.createElement('script');
+        ma.type = 'text/javascript';
+        ma.async = true;
+        ma.src = "http://localhost:8082/static/js/nstrdata.js";
+        var s = document.getElementsByTagName('script')[0];
+        s.parentNode.insertBefore(ma, s);
+      })();
     </script>
 </body>
 </html>
