@@ -10,13 +10,13 @@ import com.nstr.data.collection.model.ip.IPInfo;
 public class IPInfoHelper {
 
     /**
-     * 查找ip信息，先查本地classpath下的数据库GeoLite2-City.mmdb，如果在geoip2_database.json有指定了city数据库的位置，那么就使用指定的，如果没，就使用默认的
+     * 查找ip信息
      * 如果没有查到再查远程淘宝和新浪的API
      * @param ipStr
      * @param type  ip 插件
      * @return
      */
-    public IPInfo findIP(String ipStr, String type){
+    public static IPInfo findIP(String ipStr, String type){
 
         if(type == null || "".equals(type.trim())){
               type = AppConstant.ipPluginNames.get(0);
