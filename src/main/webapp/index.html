@@ -7,6 +7,13 @@
     <!--	<script src="http://localhost:18080/data/js/nstrdata.js"></script>-->
     <link rel="icon" href="static/favicon.ico" type="image/x-icon"/>
     <link href="https://cdn.bootcss.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="static/css/highlight/default.css" rel="stylesheet" />
+    <link href="static/css/highlight/monokai-sublime.css" rel="stylesheet" />
+    <style>
+        [v-cloak]{
+            display: none;
+        }
+    </style>
 </head>
 <body>
     <div class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3
@@ -30,9 +37,9 @@
         <h1 class="display-4">埋点测试收集数据</h1>
         <p class="lead">可以测试传递到服务器的数据，此处数据不会存储到数据库，只会进行解析！</p>
     </div>
-    <div class="container">
+    <div class="container" id="info-area">
         <div class="row">
-           <div class="col-md-8">
+           <div class="col-md-7">
                <span class="input-group-addon">分数 : </span>
                <div class="input-group">
                    <input type="text" class="form-control" placeholder="评论分数，这里是手写，但是在真正页面上需要有样式" id="score" />
@@ -47,11 +54,65 @@
                <div class="input-group">
                    <textarea type="text" rows="10" class="form-control" placeholder="评论内容" id="content" ></textarea>
                </div>
-           </div>
-           <div class="col-md-4">
+               <br />
                <button class="btn btn-outline-primary" id="clickNode" onclick="saveComment()">提交</button>
            </div>
+           <div class="col-md-5">
+               <div>
+                   <h6 style="color: blue;">嵌入代码</h6>
+                   <pre v-cloak>
+                       <code id="codeArea">
+
+                       </code>
+                   </pre>
+<div id="codeInfo" style="display: none;">
+    <!--&lt;script&gt;-->
+    var _maq = _maq || [];<br />
+    _maq.push(['_setAccount', "{{params.account}}"]);      <br />
+    _maq.push(['_setScore', "{{params.score}}"]);          <br />
+    _maq.push(['_setContent', "{{params.content}}"]);      <br />
+    _maq.push(['_setContact', "{{params.contact}}"]);      <br />
+    _maq.push(['_setClickButton', "{{params.clickButton}}"]); <br />
+    _maq.push(['_setResource', "{{params.resource}}"]);   <br />
+
+    (function () {
+        var ma = document.createElement('script');
+        ma.type = 'text/javascript';
+        ma.async = true;
+        ma.src = "http://localhost:8082/static/js/nstrdata.js";
+        var s = document.getElementsByTagName('script')[0];
+        s.parentNode.insertBefore(ma, s);
+    })();
+    <!--&lt;/script&gt;-->
+</div>
+                   <div>
+                       <h6 style="color: blue;">嵌入代码初始化设置</h6>
+                       <div class="row" id="initParams">
+                           <div class="col-md-6">
+                                <input type="text" class="form-control" placeholder="账号id设置" v-model="params.account" />
+                           </div>
+                           <div class="col-md-6">
+                               <input type="text" class="form-control" placeholder="score标签" v-model="params.score" />
+                           </div>
+                           <div class="col-md-6">
+                               <input type="text" class="form-control" placeholder="contact标签" v-model="params.contact" />
+                           </div>
+                           <div class="col-md-6">
+                               <input type="text" class="form-control" placeholder="content标签" v-model="params.content" />
+                           </div>
+                           <div class="col-md-6">
+                               <input type="text" class="form-control" placeholder="click标签" v-model="params.clickButton" />
+                           </div>
+                           <div class="col-md-6">
+                               <input type="text" class="form-control" placeholder="resource标签" v-model="params.resource" />
+                           </div>
+                       </div>
+                   </div>
+                   
+               </div>
+           </div>
         </div>
+        <hr />
         <div>
             <p>本系统的使用方式和piwik监测系统的使用是一样的，但是对于评论系统的地方，有一些规定的参数。在初始化的时候必须设置几个参数：
                 <br />
@@ -62,32 +123,61 @@
                 clickButton：也就点击提交事件的button标签的id <br />
                 resource：也就资源标识符标签的id <br />
             </p>
+            <hr />
+            
         </div>
     </div>
     <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://cdn.bootcss.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+    <script src="static/js/vue/vue.min.js"></script>
+    <script src="static/js/vue/vue-resource.min.js"></script>
+    <script src="static/js/highlight/highlight.pack.js"></script>
     <script>
       function saveComment() {
-        console.log("comment click!")
+        console.log("本地提交");
+        console.log("comment click!");
       }
     </script>
     <script type="text/javascript">
-      var _maq = _maq || [];
-      _maq.push(['_setAccount', 'web-uuid']);
-      _maq.push(['_setScore', 'score']);
-      _maq.push(['_setContent', 'content']);
-      _maq.push(['_setContact', 'contact']);
-      _maq.push(['_setClickButton', 'clickNode']);
-      _maq.push(['_setResource', 'resourceid']);
 
-      (function () {
-        var ma = document.createElement('script');
-        ma.type = 'text/javascript';
-        ma.async = true;
-        ma.src = "http://localhost:8082/static/js/nstrdata.js";
-        var s = document.getElementsByTagName('script')[0];
-        s.parentNode.insertBefore(ma, s);
-      })();
+      var infoVM=new Vue({
+        el:"#info-area",
+        data:{
+            params:{
+              "account":"web-uuid123123nsnsyyhh",
+              "score":"score",
+              "contact":"contact",
+              "content":"content",
+              "clickButton":"clickNode",
+              "resource":"resourceid"
+            },
+        },
+        ready:function () {
+          this.getInitCode();
+          this.inputChange();
+        },
+        computed:{
+
+        },
+        methods:{
+            inputChange:function(){
+              $("#initParams input").change(function(){
+                infoVM.getInitCode();
+              });
+            },
+            getInitCode:function(){
+                let innerText = $("#codeInfo").html();
+                console.log(innerText)
+                $("#codeArea").html(innerText);
+                highlightCode();
+            }
+        }
+      });
+      function highlightCode(){
+        $('pre code').each(function(i, block) {
+          hljs.highlightBlock(block);
+        });
+      }
     </script>
 </body>
 </html>
