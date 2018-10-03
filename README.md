@@ -24,6 +24,7 @@ nstrdata collection
    <script>
     var _maq = _maq || [];
        _maq.push(['_setAccount', "web-uuid123"]);  //必须       
+       _maq.push(['_setIpPlugin', "FUZZY2"]);  //可选       
        _maq.push(['_setScore', "score"]);  //必须           
        _maq.push(['_setContent', "content"]);  //必须       
        _maq.push(['_setContact', "contact"]);    //必须     
@@ -47,7 +48,7 @@ nstrdata collection
 | 参数设置key | 参数val解析 | 其他 |
 | :------| ------: | :------: |
 | _setAccount | 用户的唯一标识符，也就是平台的id信息 | 本系统不维护平台相关的信息，只做评论数据的监测与api服务 |
-| _setIpPlugin | 设置ip解析的策略 |大小写不敏感， 分别是geoip（默认），ipipnet，no不启用解析，fuzzy不启用解析并且对ip进行模糊处理，最后fuzzy2表示不启用解析并且模糊后两位 |
+| _setIpPlugin | 设置ip解析的策略 |大小写不敏感， 分别是geoip（默认），ipipnet，no不启用解析，fuzzy不启用解析并且对ip最后一位进行模糊处理，最后fuzzy2表示不启用解析并且模糊后两位 |
 | _setScore | 用户对资源的评分信息的标签 | 也就是系统需要根据平台提供的这个值，然后操作dom，获取信息的值:document.getElementById(scoreTagId).value; |
 | _setContent | 用户对资源的评论内容标签的id | 要能够根据如下的dom操作得到评论的内容：document.getElementById(contentTagId).value; |
 | _setContact | 用户的联系方式的标签id | 要能够根据如下的dom操作得到评论的内容：document.getElementById(contactTagId).value; |
@@ -71,7 +72,7 @@ nstrdata collection
 | userid | string | 用户id |     自动获取 |
 | contact | string | 联系方式 |  表单内容 |
 | content | string | 反馈内容 |  表单内容 |
-| score | float | 反馈分数 |    表单内容 |
+| score | float | 反馈分数 |    表单内容，只会是1-5分，可以是小数，但是不能超过，大于5的都会是5，小于1的都是1 |
 
 这些信息都会使用一个args的参数的值形式发送到监测数据的服务器，
 服务器会对这些数据进行解析。分别是获取ip（ip会进行解析），获取用户代理（用户的额操作系统和浏览器信息）；
