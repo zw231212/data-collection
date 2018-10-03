@@ -20,13 +20,13 @@ public class CollectionData implements Serializable {
   private String lang;//客户端语言
   private String keywords;//需要记录的查询关键词
 
-  private String account; //账号
+  private String account; //账号id，唯一标识符
   private String resourceid;//资源标识符id
-  private String userid;
+  private String userid;  //用户id
   
-  private String contact;
-  private String content;
-  private Float score;
+  private String contact; //联系方式
+  private String content; //反馈内容
+  private Float score;    //反馈分数
 
 
 }
