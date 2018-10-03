@@ -10,8 +10,9 @@ public class AppConstant {
 
   /**
    * 启用的ip解析的插件，分别是geoip（默认），ipipnet，不启用解析，不启用解析并且对ip进行模糊处理
+   * 最后fuzzy2表示不启用解析并且模糊后两位
    */
-  public static List<String> ipPluginNames = Arrays.asList("geoip", "ipipnet", "NO", "FUZZY");
+  public static List<String> ipPluginNames = Arrays.asList("geoip", "ipipnet", "no", "fuzzy", "fuzzy2");
   public static final String UNKOWN_INFO = "UNKOWN";
 
 }

@@ -76,7 +76,12 @@
 <div id="codeInfo" style="display: none;">
     <!--&lt;script&gt;-->
     var _maq = _maq || [];<br />
-    _maq.push(['_setAccount', "{{params.account}}"]);      <br />
+    //平台初始化参数
+    <br />
+    _maq.push(['_setAccount', "{{params.account}}"]);    <br />
+    _maq.push(['_setIpPlugin', "{{params.ipPlugin}}"]);   <br />
+    //评论相关的参数设置
+    <br />
     _maq.push(['_setScore', "{{params.score}}"]);          <br />
     _maq.push(['_setContent', "{{params.content}}"]);      <br />
     _maq.push(['_setContact', "{{params.contact}}"]);      <br />
@@ -247,6 +252,7 @@
               "clickButton":"clickNode",
               "resource":"resourceid",
               "user":"userid",
+              "ipPlugin":"FUZZY2",
             },
           apiPath:apis[0].api,
           apis:apis
@@ -332,6 +338,7 @@
       _maq.push(['_setClickButton', infoVM.$data.params.clickButton]);
       _maq.push(['_setResource', infoVM.$data.params.resource]);
       _maq.push(['_setUser', infoVM.$data.params.user]);
+      _maq.push(['_setIpPlugin', infoVM.$data.params.ipPlugin]);
 
       (function () {
         var ma = document.createElement('script');

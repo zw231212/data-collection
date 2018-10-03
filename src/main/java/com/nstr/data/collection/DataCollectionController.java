@@ -32,7 +32,7 @@ public class DataCollectionController {
 
     @RequestMapping(value = "/log.gif")
     public void analysis(String args, HttpServletRequest request,
-                         @RequestParam(value = "type",required = false,defaultValue = "geoip") String type,
+                         @RequestParam(value = "ipPlugin",required = false,defaultValue = "geoip") String type,
                          HttpServletResponse response) throws IOException {
 		    //打印日志，写入日志文件里面去
         String ipAddr = IPAddressUtil.getIpAddr(request);

@@ -13,6 +13,7 @@ import com.nstr.data.collection.util.UseragentUtil.UserAgentInfo;
 import java.util.Date;
 import java.util.Optional;
 import javax.annotation.Resource;
+import javax.persistence.TypedQuery;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.data.domain.ExampleMatcher.GenericPropertyMatcher;
@@ -74,6 +75,8 @@ public class ResourceCommentServiceImpl implements ResourceCommentService {
     rc.setRegion(ip.getCity());
     rc.setLat(ip.getLatitude());
     rc.setLng(ip.getLongtitude());
+
+    //最后再设置ip信息，并且ip信息是从返回的ipinfo里面获取
     rc.setIpaddr(ip.getIp());
 
     rc.setCreateTime(new Date().getTime());

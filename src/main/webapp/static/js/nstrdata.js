@@ -1,9 +1,9 @@
 (function () {
-  var params = {},
+  var params = {},plugins={},
       comment={
         "score":"", "contact":"",
         "content":"", "click_button":"",
-        "resource":"","user":""
+        "resource":"","user":"",
       };
   //Document对象数据
   if (document) {
@@ -48,11 +48,14 @@
         case '_setUser':
           comment.user = _maq[i][1];
           break;
+        case '_setIpPlugin':
+          plugins.ipPlugin = _maq[i][1];
+          break;
         default:
           break;
       }
     }
-    console.log(comment)
+    console.log(comment,params)
     if(comment.click_button){
       document.getElementById(comment.click_button).addEventListener("click",clickHandler);
     }
@@ -84,7 +87,7 @@
     params.userid = userid.value || '';
     var args = dealParams();
     var img = new Image(1, 1);
-    var src = 'http://localhost:8082/nstr/data/log.gif?args=' + encodeURIComponent(args);
+    var src = 'http://localhost:8082/nstr/data/log.gif?ipPlugin='+plugins.ipPlugin+'&args=' + encodeURIComponent(args);
     //alert(src);
     img.src = src;
   }

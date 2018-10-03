@@ -19,7 +19,7 @@ nstrdata collection
 每个平台在加入监测之前，必须加入在元数据的评论的页面加入一段代码。
 也就算是每个平台的资源评论页面必须符合下述的规范方能加入到整体的资源评论的监测之中。
 同时才能更好的为各个平台做数据支持服务。评论须包含如下所示的三个部分：分数，联系方式，评论内容；
-而且评论整体的数据不能多于1000个字符。
+而且评论整体的数据不能多于1000个字符。其中的data-collection-domain/nstr这个是监测服务器的地址。
 ```html
    <script>
     var _maq = _maq || [];
@@ -47,6 +47,7 @@ nstrdata collection
 | 参数设置key | 参数val解析 | 其他 |
 | :------| ------: | :------: |
 | _setAccount | 用户的唯一标识符，也就是平台的id信息 | 本系统不维护平台相关的信息，只做评论数据的监测与api服务 |
+| _setIpPlugin | 设置ip解析的策略 |大小写不敏感， 分别是geoip（默认），ipipnet，no不启用解析，fuzzy不启用解析并且对ip进行模糊处理，最后fuzzy2表示不启用解析并且模糊后两位 |
 | _setScore | 用户对资源的评分信息的标签 | 也就是系统需要根据平台提供的这个值，然后操作dom，获取信息的值:document.getElementById(scoreTagId).value; |
 | _setContent | 用户对资源的评论内容标签的id | 要能够根据如下的dom操作得到评论的内容：document.getElementById(contentTagId).value; |
 | _setContact | 用户的联系方式的标签id | 要能够根据如下的dom操作得到评论的内容：document.getElementById(contactTagId).value; |
@@ -104,4 +105,10 @@ nstrdata collection
 | score | float | 反馈分数 |  
 | createTime | Long | 创建时间 |  
 
-    总表数据
+    
+    
+系统api使用
+---------
+[!系统评论页面](./screenshots/信息提交与嵌入diamante展示.png)
+[!一些说明信息](./screenshots/一些说明.png)
+[!api信息查看与交互](./screenshots/api信息查看.png)
