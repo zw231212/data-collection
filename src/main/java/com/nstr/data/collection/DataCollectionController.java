@@ -1,5 +1,6 @@
 package com.nstr.data.collection;
 
+import com.nstr.data.collection.config.AppConstant;
 import com.nstr.data.collection.model.CollectionData;
 import com.nstr.data.collection.model.pojo.ResourceComment;
 import com.nstr.data.collection.service.ResourceCommentService;
@@ -50,6 +51,20 @@ public class DataCollectionController {
 
         if(cdata != null ){
             cdata.setIpaddr(ipAddr);
+            //对分数进行检查
+            Float score = cdata.getScore();
+            if(score == null){ //默认是5分也就是第一个
+                score = AppConstant.scoreRangs.get(0);
+            }
+            if(!AppConstant.scoreRangs.contains(score)){ //不在区间内的
+                if(score >5f){
+                    score = 5f;
+                }else if(score <1f){
+                    score = 1f;
+                }
+                cdata.setScore(score);
+            }
+
             //保存信息
             ResourceComment rc = resourceCommentService.save(cdata, type);
         }

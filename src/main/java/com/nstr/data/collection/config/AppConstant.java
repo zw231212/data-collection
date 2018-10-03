@@ -14,5 +14,7 @@ public class AppConstant {
    */
   public static List<String> ipPluginNames = Arrays.asList("geoip", "ipipnet", "no", "fuzzy", "fuzzy2");
   public static final String UNKOWN_INFO = "UNKOWN";
+  //评分分数区间
+  public static List<Float> scoreRangs = Arrays.asList(5f,4f,3f,2f,1f);
 
 }
