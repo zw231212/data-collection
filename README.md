@@ -110,6 +110,6 @@ nstrdata collection
     
 系统api使用
 ---------
-[!系统评论页面](./screenshots/信息提交与嵌入diamante展示.png)
-[!一些说明信息](./screenshots/一些说明.png)
-[!api信息查看与交互](./screenshots/api信息查看.png)
+![系统评论页面](./screenshots/信息提交与嵌入diamante展示.png)
+![一些说明信息](./screenshots/一些说明.png)
+![api信息查看与交互](./screenshots/api信息查看.png)
