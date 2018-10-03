@@ -1,4 +1,4 @@
-nstrdata collection
+nstrdata-collection
 =======================
 
 项目来源
