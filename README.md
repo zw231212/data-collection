@@ -23,13 +23,13 @@ nstrdata collection
 ```html
    <script>
     var _maq = _maq || [];
-       _maq.push(['_setAccount', "web-uuid123"]);      
-       _maq.push(['_setScore', "score"]);          
-       _maq.push(['_setContent', "content"]);      
-       _maq.push(['_setContact', "contact"]);      
-       _maq.push(['_setClickButton', "clickNode"]); 
-       _maq.push(['_setResource', "resourceid"]);   
-       _maq.push(['_setUser', "userid"]);   
+       _maq.push(['_setAccount', "web-uuid123"]);  //必须       
+       _maq.push(['_setScore', "score"]);  //必须           
+       _maq.push(['_setContent', "content"]);  //必须       
+       _maq.push(['_setContact', "contact"]);    //必须     
+       _maq.push(['_setClickButton', "clickNode"]);   //必须  
+       _maq.push(['_setResource', "resourceid"]); //必须  
+       _maq.push(['_setUser', "userid"]);  //可选    
    
    
        (function () {
@@ -76,21 +76,32 @@ nstrdata collection
 服务器会对这些数据进行解析。分别是获取ip（ip会进行解析），获取用户代理（用户的额操作系统和浏览器信息）；
 最终每个评论会得到如下的信息：
 
-| 字段名称 | 字段类型 | 字段解释 | 字段来源 |
-| :------| ------: | :------: |  :------: |
-| url | string | 页面url |  自动获取 |
-| title | string | 页面title | 自动获取 |
-| height | int | 屏幕高 |    自动获取 |
-| width | int | 屏幕宽 |     自动获取 |
-| referrer | string | 网页referrer | 自动获取 |
-| ua | string | user-agent |     自动获取 |
-| lang | string | 客户端语言 | 自动获取 |
-| account | string | 账号id |    自动获取 |
-| resourceid | string | 资源标识符id | 自动获取 |
-| userid | string | 用户id |     自动获取 |
-| contact | string | 联系方式 |  表单内容 |
-| content | string | 反馈内容 |  表单内容 |
-| score | float | 反馈分数 |    表单内容 |
+| 字段名称 | 字段类型 | 字段解释 |
+| :------| ------: | :------: | 
+| id | Long | 页面url |
+| account | string | 所在组织id |
+| resourceid | string | 资源标识符id |
+| userid | string | 用户id |
+| title | string | 用户id |
+| url | string | 网页的url |
+| referrer | string | 网页referrer |
+| clientLang | string | 客户端语言 |
+| ipaddr | string | ip信息 | 
+| area | string | 国家或地区 | 
+| province | string | 省份 | 
+| region | string | 地市或者县区 | 
+| lat | double | 经度 |
+| lng | double | 维度 | 
+| ua | string | user-agent | 
+| browser | string | 浏览器名称|
+| browserVersion | string | 浏览器版本号 |
+| browserType | string | 浏览器类型 |
+| os | string | 操作系统名称 |     
+| osVersion | string | 操作系统版本号 |
+| osType | string | 操作系统类型 |  
+| contact | string | 联系方式 |
+| content | string | 反馈内容 | 
+| score | float | 反馈分数 |  
+| createTime | Long | 创建时间 |  
 
-    每个单表
     总表数据
