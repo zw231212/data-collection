@@ -29,13 +29,13 @@ public class ResourceCommentAPI {
       @RequestParam(value = "size",required = false,defaultValue = "10") Integer size){
 
     if(StringUtil.isNullOrBlank(account)){
-      return APIResponse.newFailInstance(Message.PARAMS_LOSE);
+      return APIResponse.fail(Message.PARAMS_LOSE);
     }
 
     Page<ResourceComment> page = resourceCommentService.findPage(account, resourceid, userid, number, size);
 
 
-    return APIResponse.successInstance(page);
+    return APIResponse.ok(page);
   }
 
   @RequestMapping("/detail/{id}/get")
@@ -43,7 +43,7 @@ public class ResourceCommentAPI {
       @PathVariable(value = "id") Long id
       ){
     ResourceComment rc = resourceCommentService.findOne(id);
-    return APIResponse.successInstance(rc);
+    return APIResponse.ok(rc);
   }
 
 

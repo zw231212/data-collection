@@ -13,10 +13,8 @@ import com.nstr.data.collection.util.UseragentUtil.UserAgentInfo;
 import java.util.Date;
 import java.util.Optional;
 import javax.annotation.Resource;
-import javax.persistence.TypedQuery;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.ExampleMatcher;
-import org.springframework.data.domain.ExampleMatcher.GenericPropertyMatcher;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -32,7 +30,8 @@ public class ResourceCommentServiceImpl implements ResourceCommentService {
 
   @Override
   public ResourceComment save(CollectionData cdata, String type) {
-    if(cdata == null || StringUtil.isNullOrBlank(cdata.getAccount()) || StringUtil.isNullOrBlank(cdata.getResourceid())){
+    if(cdata == null || StringUtil.isNullOrBlank(cdata.getAccount())
+            || StringUtil.isNullOrBlank(cdata.getResourceid()) ){
        return null;
     }
     ResourceComment rc = new ResourceComment();
@@ -100,7 +99,7 @@ public class ResourceCommentServiceImpl implements ResourceCommentService {
     }
 
     if(size < 0){
-      size = 0;
+      size = 10;
     }
     Sort sort = Sort.by(Order.desc("createTime"));
     ResourceComment rc = new ResourceComment();
@@ -117,7 +116,6 @@ public class ResourceCommentServiceImpl implements ResourceCommentService {
       matcher.withMatcher(userid, match -> match.exact());
     }
     Example<ResourceComment> example = Example.of(rc,matcher);
-    Page<ResourceComment> page = resourceCommentRepository.findAll(example,pageable);
-    return page;
+    return resourceCommentRepository.findAll(example,pageable);
   }
 }

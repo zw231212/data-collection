@@ -22,14 +22,15 @@ nstrdata-collection
 而且评论整体的数据不能多于1000个字符。其中的data-collection-domain/nstr这个是监测服务器的地址。
 ```html
    <script>
-    var _maq = _maq || [];
-       _maq.push(['_setAccount', "web-uuid123"]);  //必须       
-       _maq.push(['_setIpPlugin', "FUZZY2"]);  //可选       
+        var _maq = _maq || [];
+       _maq.push(['_setAccount', "web-uuid123"]);  //必须,共享网的账户的id       
        _maq.push(['_setScore', "score"]);  //必须           
        _maq.push(['_setContent', "content"]);  //必须       
        _maq.push(['_setContact', "contact"]);    //必须     
        _maq.push(['_setClickButton', "clickNode"]);   //必须  
-       _maq.push(['_setResource', "resourceid"]); //必须  
+       _maq.push(['_setResource', "resourceid"]); //必须
+         
+       _maq.push(['_setIpPlugin', "FUZZY2"]);  //可选       
        _maq.push(['_setUser', "userid"]);  //可选    
    
    
