@@ -65,7 +65,7 @@ public class DataCollectionController {
             }
 
             //保存信息
-            ResourceComment rc = resourceCommentService.save(cdata, type);
+            resourceCommentService.save(cdata, type);
         }
 
         //返回信息

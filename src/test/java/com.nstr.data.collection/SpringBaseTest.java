@@ -2,9 +2,11 @@ package com.nstr.data.collection;
 
 
 import com.nstr.data.collection.model.pojo.ResourceComment;
-import com.nstr.data.collection.repository.ResourceCommentRepository;
+
 import javax.annotation.Resource;
 import javax.sql.DataSource;
+
+import com.nstr.data.collection.repository.ResourceCommentMapper;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -18,7 +20,7 @@ public class SpringBaseTest {
   @Resource
   private DataSource dataSource;
   @Resource
-  private ResourceCommentRepository resourceCommentRepository;
+  private ResourceCommentMapper resourceCommentRepository;
 
   @Test
   public void testDS(){

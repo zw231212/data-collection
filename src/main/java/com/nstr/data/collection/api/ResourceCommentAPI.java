@@ -1,12 +1,12 @@
 package com.nstr.data.collection.api;
 
+import com.github.pagehelper.PageInfo;
 import com.nstr.data.collection.model.pojo.ResourceComment;
 import com.nstr.data.collection.model.response.APIResponse;
 import com.nstr.data.collection.model.response.Message;
 import com.nstr.data.collection.service.ResourceCommentService;
 import com.nstr.data.collection.util.StringUtil;
 import javax.annotation.Resource;
-import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -32,8 +32,7 @@ public class ResourceCommentAPI {
       return APIResponse.fail(Message.PARAMS_LOSE);
     }
 
-    Page<ResourceComment> page = resourceCommentService.findPage(account, resourceid, userid, number, size);
-
+    PageInfo<ResourceComment> page = resourceCommentService.findPage(account, resourceid, userid, number, size);
 
     return APIResponse.ok(page);
   }

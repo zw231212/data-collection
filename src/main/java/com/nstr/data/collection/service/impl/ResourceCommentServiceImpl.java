@@ -1,32 +1,28 @@
 package com.nstr.data.collection.service.impl;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.nstr.data.collection.ip.IPInfoHelper;
 import com.nstr.data.collection.model.CollectionData;
 import com.nstr.data.collection.model.ip.IPInfo;
 import com.nstr.data.collection.model.pojo.ResourceComment;
-import com.nstr.data.collection.repository.ResourceCommentRepository;
+import com.nstr.data.collection.model.pojo.ResourceCommentExample;
+import com.nstr.data.collection.repository.ResourceCommentMapper;
 import com.nstr.data.collection.service.ResourceCommentService;
 import com.nstr.data.collection.util.StringUtil;
 import com.nstr.data.collection.util.UseragentUtil;
 import com.nstr.data.collection.util.UseragentUtil.Entity;
 import com.nstr.data.collection.util.UseragentUtil.UserAgentInfo;
 import java.util.Date;
-import java.util.Optional;
+import java.util.List;
 import javax.annotation.Resource;
-import org.springframework.data.domain.Example;
-import org.springframework.data.domain.ExampleMatcher;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
-import org.springframework.data.domain.Sort.Order;
 import org.springframework.stereotype.Service;
 
 @Service("resourceCommentService")
 public class ResourceCommentServiceImpl implements ResourceCommentService {
 
   @Resource
-  private ResourceCommentRepository resourceCommentRepository;
+  private ResourceCommentMapper resourceCommentMapper;
 
   @Override
   public ResourceComment save(CollectionData cdata, String type) {
@@ -49,7 +45,7 @@ public class ResourceCommentServiceImpl implements ResourceCommentService {
     rc.setClientLang(cdata.getLang());
 
     String ua = cdata.getUa();
-    rc.setUa(ua);
+    rc.setUserAgent(ua);
     //解析ua
     UserAgentInfo uainfo = UseragentUtil.parse(ua);
 
@@ -80,20 +76,19 @@ public class ResourceCommentServiceImpl implements ResourceCommentService {
 
     rc.setCreateTime(new Date().getTime());
 
-    rc = resourceCommentRepository.save(rc);
-
+    resourceCommentMapper.insertSelective(rc);
     return rc;
   }
 
   @Override
   public ResourceComment findOne(Long id) {
-    Optional<ResourceComment> rcOptional = resourceCommentRepository.findById(id);
-    return rcOptional.orElse(null);
+    ResourceComment resourceComment = resourceCommentMapper.selectByPrimaryKey(id);
+    return resourceComment;
   }
 
   @Override
-  public Page<ResourceComment> findPage(String account, String resourceid, String userid,
-      Integer number, Integer size) {
+  public PageInfo<ResourceComment> findPage(String account, String resourceid, String userid,
+                                            Integer number, Integer size) {
     if(number < 0){
       number = 0;
     }
@@ -101,21 +96,22 @@ public class ResourceCommentServiceImpl implements ResourceCommentService {
     if(size < 0){
       size = 10;
     }
-    Sort sort = Sort.by(Order.desc("createTime"));
-    ResourceComment rc = new ResourceComment();
-    rc.setAccount(account);
-    Pageable pageable =PageRequest.of(number, size, sort);
-    ExampleMatcher matcher = ExampleMatcher.matching()
-        .withMatcher(account, match -> match.exact());
+
+    PageHelper.startPage(number,size,true);
+    ResourceCommentExample example = new ResourceCommentExample();
+
+    example.setOrderByClause("create_time DESC");
+
+    ResourceCommentExample.Criteria criteria = example.createCriteria();
+    criteria.andAccountEqualTo(account);
+
     if(!StringUtil.isNullOrBlank(resourceid)){
-      rc.setResourceid(resourceid);
-      matcher.withMatcher(resourceid, match -> match.exact());
+      criteria.andResourceidEqualTo(resourceid);
     }
     if(!StringUtil.isNullOrBlank(userid)){
-      rc.setUserid(userid);
-      matcher.withMatcher(userid, match -> match.exact());
+      criteria.andUseridEqualTo(userid);
     }
-    Example<ResourceComment> example = Example.of(rc,matcher);
-    return resourceCommentRepository.findAll(example,pageable);
+    List<ResourceComment> comments = resourceCommentMapper.selectByExample(example);
+    return new PageInfo<>(comments);
   }
 }

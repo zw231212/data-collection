@@ -1,8 +1,8 @@
 package com.nstr.data.collection.service;
 
+import com.github.pagehelper.PageInfo;
 import com.nstr.data.collection.model.CollectionData;
 import com.nstr.data.collection.model.pojo.ResourceComment;
-import org.springframework.data.domain.Page;
 
 public interface ResourceCommentService {
 
@@ -16,5 +16,5 @@ public interface ResourceCommentService {
 
   ResourceComment findOne(Long id);
 
-  Page<ResourceComment> findPage(String account, String resourceid, String userid, Integer number, Integer size);
+  PageInfo<ResourceComment> findPage(String account, String resourceid, String userid, Integer number, Integer size);
 }

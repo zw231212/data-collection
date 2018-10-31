@@ -1,12 +1,12 @@
 package com.nstr.data.collection;
 
 
+import com.github.pagehelper.PageInfo;
 import com.nstr.data.collection.model.pojo.ResourceComment;
 import com.nstr.data.collection.service.ResourceCommentService;
 import javax.annotation.Resource;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.springframework.data.domain.Page;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
@@ -28,8 +28,8 @@ public class ServiceTest {
     String id ="web-uuid123";
     String resourceid= null;
     String userid = null;
-    Page<ResourceComment> page = resourceCommentService.findPage(id, resourceid, userid, 0, 10);
-    System.out.println(page.getContent());
+    PageInfo<ResourceComment> page = resourceCommentService.findPage(id, resourceid, userid, 0, 10);
+    System.out.println(page.getList());
   }
 
 }
