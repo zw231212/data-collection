@@ -27,7 +27,7 @@ public class RepositoryTest {
 
     @Test
     public void testArea(){
-        List<DailyColumn> columns = statisticMapper.areaStatic("area");
+        List<DailyColumn> columns = statisticMapper.columnStatic("area");
         for (DailyColumn dailyColumn : columns) {
             System.out.println(dailyColumn);
         }
