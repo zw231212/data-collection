@@ -25,7 +25,10 @@ public class StatisticServiceImpl implements StatisticService {
         List<String> scs = AppConstant.statisticColumns;
         for (String sc : scs) {
             List<DailyColumn> columns = statisticMapper.columnStatic(sc);
-            dailyColumnMapper.insertBatchSelective(columns);
+            if(columns == null || columns.size() ==0 ){
+                continue;
+            }
+            dailyColumnMapper.insertBatch(columns);
         }
     }
 }

@@ -8,7 +8,7 @@ import java.util.Calendar;
 public class TableUtil {
 
     /**
-     * 生成表格的日期后缀
+     * 生成当前日期的表格的日期后缀
      * @param type
      * @return
      */
@@ -21,16 +21,36 @@ public class TableUtil {
         String result = "";
         switch (type){
             case "day":
+                instance.add(Calendar.DATE,-1);
                 int day = instance.get(Calendar.DAY_OF_MONTH);
                 result += day;
+            case "week":
+                if(!"day".equals(type)){
+                    if("week".equals(type)){
+                        instance.add(Calendar.WEEK_OF_MONTH, -1);
+                    }
+
+                    int week = instance.get(Calendar.WEEK_OF_MONTH);
+                    if(StringUtil.isNullOrBlank(result)){
+                        result += week;
+                    }else{
+                        result = week + "_" + result;
+                    }
+                }
             case "month":
-                int month = instance.get(Calendar.MONTH)+1;
+                if("month".equals(type)){
+                    instance.add(Calendar.MONTH, -1);
+                }
+                int month = instance.get(Calendar.MONTH) + 1;
                 if(StringUtil.isNullOrBlank(result)){
                     result += month;
                 }else{
                     result = month + "_" + result;
                 }
             case "year":
+                if("year".equals(type)){
+                    instance.add(Calendar.YEAR, -1);
+                }
                 int year = instance.get(Calendar.YEAR);
                 if(StringUtil.isNullOrBlank(result)){
                     result += year;
@@ -59,7 +79,7 @@ public class TableUtil {
     }
 
     public static void main(String[] args) {
-        String s = generateDateStr("123123");
+        String s = generateDateStr("week");
         System.out.println(s);
     }
 }

@@ -3,23 +3,40 @@ package com.nstr.data.collection.util;
 import com.nstr.data.collection.config.AppConstant;
 
 import java.text.SimpleDateFormat;
+import java.time.DayOfWeek;
+import java.time.LocalDate;
+import java.time.temporal.TemporalAdjuster;
+import java.time.temporal.TemporalAdjusters;
 import java.util.Calendar;
 import java.util.Date;
 
 public class DateUtil {
 
     public static Long[] getLongTypeBeginAndEnd(String type, int year, int month, int day){
+        Date[] dates = getBeginAndEnd(type, year, month, day);
         return new Long[]{
-                getBegin(type, year, month, day).getTime(),
-                getEnd(type, year, month, day).getTime()
-            };
+                dates[0].getTime(),
+                dates[1].getTime()
+        };
     }
 
     public static Date[] getBeginAndEnd(String type, int year, int month, int day){
-        return new Date[]{
-                    getBegin(type, year, month, day),
-                    getEnd(type, year, month, day)
-                };
+        Date[] dates = {
+                getBegin(type, year, month, day),
+                getEnd(type, year, month, day)
+        };
+        if("week".equals(type)){
+            Calendar calendar = Calendar.getInstance();
+            calendar.setFirstDayOfWeek(Calendar.MONDAY);
+            calendar.setTime(dates[0]);
+            calendar.set(Calendar.DAY_OF_WEEK,Calendar.MONDAY);
+            dates[0] = calendar.getTime();
+
+            calendar.add(Calendar.DAY_OF_WEEK, 6);
+            setDayLastCalendar(calendar);
+            dates[1] = calendar.getTime();
+        }
+        return dates;
     }
 
     public static String[] getBeginAndEnd(String type, String pattern ,int year, int month, int day){
@@ -28,9 +45,10 @@ public class DateUtil {
         }
         SimpleDateFormat format = new SimpleDateFormat();
         format.applyPattern(pattern);
+        Date[] dates = getBeginAndEnd(type, year, month, day);
         return new String[]{
-                            format.format(getBegin(type, year, month, day)),
-                            format.format(getEnd(type, year, month, day))
+                            format.format(dates[0]),
+                            format.format(dates[1])
                         };
     }
 
@@ -40,8 +58,9 @@ public class DateUtil {
      * @return
      */
     public static String checkType(String type){
-        if(StringUtil.isNullOrBlank(type) || !AppConstant.dateTypes.contains(type)){
-            type = "month";
+        if(StringUtil.isNullOrBlank(type) || !AppConstant.dateTypes.contains(type) ||
+            "week".equals(type)){
+            type = "day";
         }
         return type;
     }
@@ -53,13 +72,13 @@ public class DateUtil {
      * @param month 指定的月份
      * @return
      */
-    public static Date getBegin(String type, int year, int month, int day){
+    public static Date getBegin(String type, int year, int month,  int day){
         type = checkType(type);
         Calendar calendar = Calendar.getInstance();
         calendar.set(Calendar.MONTH,0);
         calendar.set(Calendar.DAY_OF_MONTH,1);
         //设置年月日信息
-        setCalendar(calendar, type, year, month, day,false);
+        setCalendar(calendar, type, year, month, day, false);
 
         calendar.set(Calendar.HOUR_OF_DAY, 0);
         calendar.set(Calendar.MINUTE, 0);
@@ -79,7 +98,7 @@ public class DateUtil {
      * @param end 是否是求最后一天
      * @return
      */
-    private static Calendar setCalendar(Calendar calendar,String type, int year, int month, int day, boolean end){
+    private static Calendar setCalendar(Calendar calendar,String type, int year, int month,  int day, boolean end){
         switch (type){
             case "day":
                 calendar.set(Calendar.DATE, day);
@@ -120,18 +139,19 @@ public class DateUtil {
         Calendar calendar = Calendar.getInstance();
 
         calendar.set(Calendar.MONTH,calendar.getActualMaximum(Calendar.MONTH));
-//        calendar.set(Calendar.DAY_OF_MONTH,calendar.getActualMaximum(Calendar.DATE));
 
         //设置年月日信息
         setCalendar(calendar, type, year, month, day, true);
         //一天的结束时间 yyyy:MM:dd 23:59:59
+        setDayLastCalendar(calendar);
+        return calendar.getTime();
+    }
+
+    private static void setDayLastCalendar(Calendar calendar){
         calendar.set(Calendar.HOUR_OF_DAY, 23);
         calendar.set(Calendar.MINUTE, 59);
         calendar.set(Calendar.SECOND, 59);
         calendar.set(Calendar.MILLISECOND, 999);
-        int i = calendar.get(Calendar.DATE);
-        System.out.println(i);
-        return calendar.getTime();
     }
 
     public static void main(String[] args) {
@@ -140,7 +160,7 @@ public class DateUtil {
             System.out.println(day);
         }
 
-        String[] days2 = getBeginAndEnd("month","yyyy-MM-dd HH:mm:ss",2016,3,1);
+        String[] days2 = getBeginAndEnd("week","yyyy-MM-dd HH:mm:ss",2018,11,2);
         for (String s : days2) {
             System.out.println(s);
         }
@@ -153,6 +173,16 @@ public class DateUtil {
         c.add(Calendar.DATE, -1);
 
         System.out.println("该年2月的天数为："+c.get(Calendar.DATE)+"天");
+        LocalDate inputDate = LocalDate.parse("2018-11-01");
+        TemporalAdjuster FIRST_OF_WEEK = TemporalAdjusters.ofDateAdjuster(localDate -> localDate.minusDays(localDate.getDayOfWeek().getValue()-DayOfWeek.MONDAY.getValue()));
+        System.out.println(FIRST_OF_WEEK);
+        System.out.println(inputDate.with(FIRST_OF_WEEK));
+        TemporalAdjuster LAST_OF_WEEK = TemporalAdjusters.ofDateAdjuster(localDate -> localDate.plusDays(DayOfWeek.SUNDAY.getValue() - localDate.getDayOfWeek().getValue()));
+        System.out.println(inputDate.with(LAST_OF_WEEK));
     }
 
+    public static String getFormerDate(String type) {
+
+        return null;
+    }
 }
