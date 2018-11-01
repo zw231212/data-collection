@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.nstr.data.collection.repository.HistoryCommentMapper">
+
+    <update id="transferData">
+        INSERT INTO `${tableName}`(
+              id, account, area,
+              browser, browser_type, browser_version,
+              contact, create_time, ipaddr,
+              lat, lng, os, os_type,
+              os_version, province, referrer,
+              region, resourceid, score,
+              title, url, userid,
+              user_agent, client_lang, content,
+              generation_time, `table_name`,gid
+        )
+        SELECT id, account, area,
+              browser, browser_type, browser_version,
+              contact, create_time, ipaddr,
+              lat, lng, os, os_type,
+              os_version, province, referrer,
+              region, resourceid, score,
+              title, url, userid,
+              user_agent, client_lang, content,now() as generation_time,
+              `${tableName}` as table_name,CONCAT(`${tableName}`,'_',id) as gid
+        FROM nstr_resource_comment
+        WHERE create_time between #{begin} AND #{end}
+    </update>
+
+  <update id="create" parameterType="String">
+      CREATE TABLE `${tableName}` (
+        `id` bigint(20) NOT NULL AUTO_INCREMENT,
+        `account` varchar(255) NOT NULL,
+        `browser` varchar(255) DEFAULT NULL,
+        `browser_type` varchar(255) DEFAULT NULL,
+        `browser_version` varchar(255) DEFAULT NULL,
+        `content` text,
+        `contact` varchar(255) DEFAULT NULL,
+        `create_time` bigint(20) DEFAULT NULL,
+        `ipaddr` varchar(128) DEFAULT NULL,
+        `lat` double DEFAULT NULL,
+        `lng` double DEFAULT NULL,
+        `os` varchar(255) DEFAULT NULL,
+        `os_type` varchar(255) DEFAULT NULL,
+        `os_version` varchar(255) DEFAULT NULL,
+        `area` varchar(255) DEFAULT NULL COMMENT '国家或者地区',
+        `province` varchar(255) DEFAULT NULL COMMENT '省份或者州',
+        `region` varchar(255) DEFAULT NULL COMMENT '县市或者城市',
+        `referrer` varchar(500) DEFAULT NULL,
+        `resourceid` varchar(255) DEFAULT NULL,
+        `score` float DEFAULT NULL,
+        `title` varchar(255) DEFAULT NULL,
+        `url` varchar(500) DEFAULT NULL,
+        `userid` varchar(255) DEFAULT NULL,
+        `user_agent` varchar(500) DEFAULT NULL,
+        `client_lang` varchar(255) DEFAULT NULL,
+        `generation_time` datetime DEFAULT NULL COMMENT '备份表生成时间',
+        `table_name` varchar(128) DEFAULT NULL COMMENT '备份表名称',
+        `gid` varchar(128) DEFAULT NULL COMMENT '全局id，根据表名+每个表里面的id生成',
+        PRIMARY KEY (`id`)
+      ) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
+
+  </update>
+
+
+</mapper>

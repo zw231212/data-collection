@@ -13,8 +13,10 @@ public class AppConstant {
    * 最后fuzzy2表示不启用解析并且模糊后两位
    */
   public static List<String> ipPluginNames = Arrays.asList("geoip", "ipipnet", "no", "fuzzy", "fuzzy2");
+  public static List<String> dateTypes = Arrays.asList("day", "month", "year");
   public static final String UNKOWN_INFO = "UNKOWN";
   //评分分数区间
   public static List<Float> scoreRangs = Arrays.asList(5f,4f,3f,2f,1f);
+  public static final String COMMENT_TABLE = "nstr_resource_comment";
 
 }
