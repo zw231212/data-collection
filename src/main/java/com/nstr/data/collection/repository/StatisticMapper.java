@@ -2,6 +2,7 @@ package com.nstr.data.collection.repository;
 
 import com.nstr.data.collection.model.pojo.Daily;
 import com.nstr.data.collection.model.pojo.DailyColumn;
+import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.SelectProvider;
@@ -22,6 +23,8 @@ public interface StatisticMapper {
             "WHERE create_time between #{begin} AND #{end} " +
             "GROUP BY account,day")
     List<Daily> commonStatic(@Param("begin") Long begin, @Param("end") Long end);
+    @Delete("DELETE FROM `${tableName}` WHERE `day`=#{day}")
+    void deleteSameDayData(@Param("tableName") String tableName,@Param("day") String day);
 
     /**
      * 统计国家、省份、城市、浏览器、操作系统等任意一个字段的，单列的统计
@@ -43,4 +46,7 @@ public interface StatisticMapper {
      */
     @SelectProvider(type = SqlSelectProvider.class,method ="columns" )
     List<DailyColumn> columnsStatic(@Param("columns") String[] columns);
+
+    @Delete("DELETE FROM `${tableName}` WHERE `day`=#{day} AND `type` = #{type}")
+    void deleteSameDayDataByType(@Param("tableName") String tableName, @Param("day") String day, @Param("type") String type);
 }

@@ -2,6 +2,7 @@ package com.nstr.data.collection.util;
 
 import com.nstr.data.collection.config.AppConstant;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
@@ -155,6 +156,9 @@ public class DateUtil {
     }
 
     public static void main(String[] args) {
+
+        String formerDate = getFormerDate("2018111","yyyyMMdd");
+        System.out.println(formerDate);
         Date[] days = getBeginAndEnd("month",2016,2,1);
         for (Date day : days) {
             System.out.println(day);
@@ -181,8 +185,17 @@ public class DateUtil {
         System.out.println(inputDate.with(LAST_OF_WEEK));
     }
 
-    public static String getFormerDate(String type) {
-
-        return null;
+    public static String getFormerDate(String dstr, String pattern) {
+        if(StringUtil.isNullOrBlank(pattern)){
+            pattern = "yyyy-MM-dd";
+        }
+        SimpleDateFormat format = new SimpleDateFormat(pattern);
+        try {
+            return format.format(format.parse(dstr));
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return dstr;
     }
+
 }

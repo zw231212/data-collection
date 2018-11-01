@@ -22,6 +22,9 @@ public class AppConstant {
   //评分分数区间
   public static List<Float> scoreRangs = Arrays.asList(5f,4f,3f,2f,1f);
   public static final String COMMENT_TABLE = "nstr_resource_comment";
+  public static final String DAILY_TABLE = "nstr_daily";
+  public static final String DAILY_COLUMN_TABLE = "nstr_daily_column";
+  public static final String DAILY_COMMENT_TABLE = "nstr_daily_comment";
   public static List<String> statisticColumns= new ArrayList<>();
 
   public static final String DAILY_STATISTIC = AppPropLoader.get("schedule.dailyStatistic");

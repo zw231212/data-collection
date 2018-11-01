@@ -36,6 +36,8 @@ public class StatisticServiceImpl implements StatisticService {
         Long[] bes = DateUtil.getLongTypeBeginAndEnd("day",year,month,day);
         List<Daily> dailies = statisticMapper.commonStatic(bes[0], bes[1]);
         if(dailies != null && dailies.size() > 0){
+            //先删除相同的数据
+            statisticMapper.deleteSameDayData(AppConstant.DAILY_TABLE,DateUtil.getFormerDate(year+""+month+""+day,"yyyyMMdd"));
             dailyMapper.insertBatch(dailies);
         }
         for (String sc : scs) {
@@ -43,6 +45,7 @@ public class StatisticServiceImpl implements StatisticService {
             if(columns == null || columns.size() ==0 ){
                 continue;
             }
+            statisticMapper.deleteSameDayDataByType(AppConstant.DAILY_COLUMN_TABLE,DateUtil.getFormerDate(year+""+month+""+day,"yyyyMMdd"), sc);
             dailyColumnMapper.insertBatch(columns);
         }
     }
