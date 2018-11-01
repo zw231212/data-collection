@@ -2,19 +2,19 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.nstr.data.collection.repository.CommonMapper">
 
-  <update id="truncateTable" parameterType="String">
+  <update id="truncateTable" parameterType="String" flushCache="true">
     TRUNCATE TABLE `${tableName}`;
   </update>
 
-  <update id="dropTable" parameterType="String">
+  <update id="dropTable" parameterType="String" flushCache="true">
     DROP TABLE IF EXISTS `${tableName}`;
   </update>
 
-  <update id="create" parameterType="String">
+  <update id="create" parameterType="String" flushCache="true">
     ${statement}
   </update>
 
-  <update id="createBackUpTable" parameterType="String">
+  <update id="createBackUpTable" parameterType="String" flushCache="true">
     CREATE TABLE `${tableName}` (
         `id` bigint(20) NOT NULL AUTO_INCREMENT,
         `account` varchar(255) NOT NULL,
@@ -48,11 +48,11 @@
       ) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
   </update>
 
-  <select id="exists" parameterType="String" resultType="String">
+  <select id="exists" parameterType="String" resultType="String" flushCache="true">
      SHOW TABLES LIKE  '${tableName}';
   </select>
 
-  <update id="transferData">
+  <update id="transferData"  flushCache="true">
         INSERT INTO `${tableName}`(
               id, account, area,
               browser, browser_type, browser_version,
@@ -72,7 +72,7 @@
               region, resourceid, score,
               title, url, userid,
               user_agent, client_lang, content,now() as generation_time,
-              `${tableName}` as table_name,CONCAT(`${tableName}`,'_',id) as gid
+              '${tableName}' as `table_name`,CONCAT('${tableName}','_',id) as gid
         FROM nstr_resource_comment
         WHERE create_time between #{begin} AND #{end}
     </update>
