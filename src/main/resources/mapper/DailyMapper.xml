@@ -94,7 +94,7 @@
     </if>
   </select>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
-    select 
+    select
     <include refid="Base_Column_List" />
     from nstr_daily
     where id = #{id,jdbcType=INTEGER}
@@ -204,12 +204,12 @@
   <update id="updateByExample" parameterType="map">
     update nstr_daily
     set id = #{record.id,jdbcType=INTEGER},
-      account = #{record.account,jdbcType=VARCHAR},
-      `day` = #{record.day,jdbcType=VARCHAR},
-      `value` = #{record.value,jdbcType=INTEGER},
-      create_time = #{record.createTime,jdbcType=BIGINT},
-      min_score = #{record.minScore,jdbcType=REAL},
-      avg_score = #{record.avgScore,jdbcType=REAL}
+    account = #{record.account,jdbcType=VARCHAR},
+    `day` = #{record.day,jdbcType=VARCHAR},
+    `value` = #{record.value,jdbcType=INTEGER},
+    create_time = #{record.createTime,jdbcType=BIGINT},
+    min_score = #{record.minScore,jdbcType=REAL},
+    avg_score = #{record.avgScore,jdbcType=REAL}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -251,9 +251,6 @@
   <insert id="insertBatchSelective" parameterType="java.util.List">
     insert into nstr_daily
     <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="list[0].id!=null">
-        id,
-      </if>
       <if test="list[0].account!=null">
         account,
       </if>
@@ -273,12 +270,9 @@
         avg_score,
       </if>
     </trim>
-     values 
+    values
     <foreach collection="list" index="index" item="item" separator=",">
       <trim prefix=" (" suffix=")" suffixOverrides=",">
-        <if test="item.id!=null">
-          #{item.id,jdbcType=INTEGER},
-        </if>
         <if test="item.account!=null">
           #{item.account,jdbcType=VARCHAR},
         </if>
@@ -303,7 +297,6 @@
   <insert id="insertBatch" parameterType="java.util.List">
     insert into nstr_daily
     <trim prefix="(" suffix=")" suffixOverrides=",">
-      `id`,
       `account`,
       `day`,
       `value`,
@@ -311,10 +304,9 @@
       `min_score`,
       `avg_score`,
     </trim>
-     values 
+    values
     <foreach collection="list" index="index" item="item" separator=",">
       <trim prefix=" (" suffix=")" suffixOverrides=",">
-        #{item.id,jdbcType=INTEGER},
         #{item.account,jdbcType=VARCHAR},
         #{item.day,jdbcType=VARCHAR},
         #{item.value,jdbcType=INTEGER},
@@ -347,7 +339,7 @@
           avg_score=#{item.avgScore,jdbcType=REAL},
         </if>
       </set>
-      where 
+      where
       id = #{item.id,jdbcType=INTEGER}
     </foreach>
   </update>

@@ -19,8 +19,9 @@ public interface StatisticMapper {
             "avg(score) as avg_score," +
             "min(score) as min_score, UNIX_TIMESTAMP(now())*1000 create_time  " +
             "from nstr_resource_comment " +
+            "WHERE create_time between #{begin} AND #{end} " +
             "GROUP BY account,day")
-    List<Daily> commonStatic();
+    List<Daily> commonStatic(@Param("begin") Long begin, @Param("end") Long end);
 
     /**
      * 统计国家、省份、城市、浏览器、操作系统等任意一个字段的，单列的统计
@@ -31,8 +32,9 @@ public interface StatisticMapper {
             "DATE_FORMAT(FROM_UNIXTIME(create_time/1000,'%Y%m%d'),'%Y%m%d') as day, " +
             "UNIX_TIMESTAMP(now())*1000 create_time  " +
             "FROM nstr_resource_comment " +
+            "WHERE create_time between #{begin} AND #{end} " +
             "GROUP BY account,day,${column}")
-    List<DailyColumn> columnStatic(@Param("column") String column);
+    List<DailyColumn> columnStatic(@Param("column") String column, @Param("begin") Long begin, @Param("end") Long end);
 
     /**
      * 暂时还未实现，返回值的映射是一个问题
