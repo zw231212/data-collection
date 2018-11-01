@@ -114,7 +114,7 @@
     </if>
   </select>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="ResultMapWithBLOBs">
-    select 
+    select
     <include refid="Base_Column_List" />
     ,
     <include refid="Blob_Column_List" />
@@ -217,11 +217,11 @@
   <update id="updateByExampleWithBLOBs" parameterType="map">
     update nstr_daily_comment
     set id = #{record.id,jdbcType=INTEGER},
-      account = #{record.account,jdbcType=VARCHAR},
-      `day` = #{record.day,jdbcType=VARCHAR},
-      `value` = #{record.value,jdbcType=INTEGER},
-      create_time = #{record.createTime,jdbcType=BIGINT},
-      tags = #{record.tags,jdbcType=LONGVARCHAR}
+    account = #{record.account,jdbcType=VARCHAR},
+    `day` = #{record.day,jdbcType=VARCHAR},
+    `value` = #{record.value,jdbcType=INTEGER},
+    create_time = #{record.createTime,jdbcType=BIGINT},
+    tags = #{record.tags,jdbcType=LONGVARCHAR}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -229,10 +229,10 @@
   <update id="updateByExample" parameterType="map">
     update nstr_daily_comment
     set id = #{record.id,jdbcType=INTEGER},
-      account = #{record.account,jdbcType=VARCHAR},
-      `day` = #{record.day,jdbcType=VARCHAR},
-      `value` = #{record.value,jdbcType=INTEGER},
-      create_time = #{record.createTime,jdbcType=BIGINT}
+    account = #{record.account,jdbcType=VARCHAR},
+    `day` = #{record.day,jdbcType=VARCHAR},
+    `value` = #{record.value,jdbcType=INTEGER},
+    create_time = #{record.createTime,jdbcType=BIGINT}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -278,9 +278,6 @@
   <insert id="insertBatchSelective" parameterType="java.util.List">
     insert into nstr_daily_comment
     <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="list[0].id!=null">
-        id,
-      </if>
       <if test="list[0].account!=null">
         account,
       </if>
@@ -297,12 +294,9 @@
         tags,
       </if>
     </trim>
-     values 
+    values
     <foreach collection="list" index="index" item="item" separator=",">
       <trim prefix=" (" suffix=")" suffixOverrides=",">
-        <if test="item.id!=null">
-          #{item.id,jdbcType=INTEGER},
-        </if>
         <if test="item.account!=null">
           #{item.account,jdbcType=VARCHAR},
         </if>
@@ -318,6 +312,26 @@
         <if test="item.tags!=null">
           #{item.tags,jdbcType=LONGVARCHAR},
         </if>
+      </trim>
+    </foreach>
+  </insert>
+  <insert id="insertBatch" parameterType="java.util.List">
+    insert into nstr_daily_comment
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      `account`,
+      `day`,
+      `value`,
+      `create_time`,
+      `tags`,
+    </trim>
+    values
+    <foreach collection="list" index="index" item="item" separator=",">
+      <trim prefix=" (" suffix=")" suffixOverrides=",">
+        #{item.account,jdbcType=VARCHAR},
+        #{item.day,jdbcType=VARCHAR},
+        #{item.value,jdbcType=INTEGER},
+        #{item.createTime,jdbcType=BIGINT},
+        #{item.tags,jdbcType=LONGVARCHAR},
       </trim>
     </foreach>
   </insert>
@@ -341,7 +355,7 @@
           tags=#{item.tags,jdbcType=LONGVARCHAR},
         </if>
       </set>
-      where 
+      where
       id = #{item.id,jdbcType=INTEGER}
     </foreach>
   </update>

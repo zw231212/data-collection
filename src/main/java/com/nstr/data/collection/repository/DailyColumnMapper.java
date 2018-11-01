@@ -1,16 +1,15 @@
 /*
-*
-* DailyColumnMapper.java
-* Copyright(C) 2017-2020 http://www.escience.org.cn
-* @date 2018-11-01
-*/
+ *
+ * DailyColumnMapper.java
+ * Copyright(C) 2017-2020 http://www.escience.org.cn
+ * @date 2018-11-01
+ */
 package com.nstr.data.collection.repository;
 
 import com.nstr.data.collection.model.pojo.DailyColumn;
 import com.nstr.data.collection.model.pojo.DailyColumnExample;
-import org.apache.ibatis.annotations.Param;
-
 import java.util.List;
+import org.apache.ibatis.annotations.Param;
 
 public interface DailyColumnMapper {
     /**
@@ -80,6 +79,8 @@ public interface DailyColumnMapper {
     int updateByPrimaryKey(DailyColumn record);
 
     int insertBatchSelective(List<DailyColumn> records);
+
+    int insertBatch(List<DailyColumn> records);
 
     int updateBatchByPrimaryKeySelective(List<DailyColumn> records);
 }

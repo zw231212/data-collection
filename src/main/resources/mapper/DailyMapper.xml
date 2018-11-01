@@ -300,6 +300,30 @@
       </trim>
     </foreach>
   </insert>
+  <insert id="insertBatch" parameterType="java.util.List">
+    insert into nstr_daily
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      `id`,
+      `account`,
+      `day`,
+      `value`,
+      `create_time`,
+      `min_score`,
+      `avg_score`,
+    </trim>
+     values 
+    <foreach collection="list" index="index" item="item" separator=",">
+      <trim prefix=" (" suffix=")" suffixOverrides=",">
+        #{item.id,jdbcType=INTEGER},
+        #{item.account,jdbcType=VARCHAR},
+        #{item.day,jdbcType=VARCHAR},
+        #{item.value,jdbcType=INTEGER},
+        #{item.createTime,jdbcType=BIGINT},
+        #{item.minScore,jdbcType=REAL},
+        #{item.avgScore,jdbcType=REAL},
+      </trim>
+    </foreach>
+  </insert>
   <update id="updateBatchByPrimaryKeySelective" parameterType="java.util.List">
     <foreach collection="list" index="index" item="item" separator=";">
       update nstr_daily

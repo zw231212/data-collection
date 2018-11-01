@@ -4,7 +4,6 @@
   <resultMap id="BaseResultMap" type="com.nstr.data.collection.model.pojo.ResourceComment">
     <id column="id" jdbcType="BIGINT" property="id" />
     <result column="account" jdbcType="VARCHAR" property="account" />
-    <result column="area" jdbcType="VARCHAR" property="area" />
     <result column="browser" jdbcType="VARCHAR" property="browser" />
     <result column="browser_type" jdbcType="VARCHAR" property="browserType" />
     <result column="browser_version" jdbcType="VARCHAR" property="browserVersion" />
@@ -16,9 +15,10 @@
     <result column="os" jdbcType="VARCHAR" property="os" />
     <result column="os_type" jdbcType="VARCHAR" property="osType" />
     <result column="os_version" jdbcType="VARCHAR" property="osVersion" />
+    <result column="area" jdbcType="VARCHAR" property="area" />
     <result column="province" jdbcType="VARCHAR" property="province" />
-    <result column="referrer" jdbcType="VARCHAR" property="referrer" />
     <result column="region" jdbcType="VARCHAR" property="region" />
+    <result column="referrer" jdbcType="VARCHAR" property="referrer" />
     <result column="resourceid" jdbcType="VARCHAR" property="resourceid" />
     <result column="score" jdbcType="REAL" property="score" />
     <result column="title" jdbcType="VARCHAR" property="title" />
@@ -89,8 +89,8 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, account, area, browser, browser_type, browser_version, contact, create_time, 
-    ipaddr, lat, lng, os, os_type, os_version, province, referrer, region, resourceid, 
+    id, account, browser, browser_type, browser_version, contact, create_time, ipaddr, 
+    lat, lng, os, os_type, os_version, area, province, region, referrer, resourceid, 
     score, title, url, userid, user_agent, client_lang
   </sql>
   <sql id="Blob_Column_List">
@@ -153,21 +153,21 @@
     </if>
   </delete>
   <insert id="insert" parameterType="com.nstr.data.collection.model.pojo.ResourceComment">
-    insert into nstr_resource_comment (id, account, area, 
-      browser, browser_type, browser_version, 
-      contact, create_time, ipaddr, 
-      lat, lng, os, os_type, 
-      os_version, province, referrer, 
-      region, resourceid, score, 
+    insert into nstr_resource_comment (id, account, browser, 
+      browser_type, browser_version, contact, 
+      create_time, ipaddr, lat, 
+      lng, os, os_type, os_version, 
+      area, province, region, 
+      referrer, resourceid, score, 
       title, url, userid, 
       user_agent, client_lang, content
       )
-    values (#{id,jdbcType=BIGINT}, #{account,jdbcType=VARCHAR}, #{area,jdbcType=VARCHAR}, 
-      #{browser,jdbcType=VARCHAR}, #{browserType,jdbcType=VARCHAR}, #{browserVersion,jdbcType=VARCHAR}, 
-      #{contact,jdbcType=VARCHAR}, #{createTime,jdbcType=BIGINT}, #{ipaddr,jdbcType=VARCHAR}, 
-      #{lat,jdbcType=DOUBLE}, #{lng,jdbcType=DOUBLE}, #{os,jdbcType=VARCHAR}, #{osType,jdbcType=VARCHAR}, 
-      #{osVersion,jdbcType=VARCHAR}, #{province,jdbcType=VARCHAR}, #{referrer,jdbcType=VARCHAR}, 
-      #{region,jdbcType=VARCHAR}, #{resourceid,jdbcType=VARCHAR}, #{score,jdbcType=REAL}, 
+    values (#{id,jdbcType=BIGINT}, #{account,jdbcType=VARCHAR}, #{browser,jdbcType=VARCHAR}, 
+      #{browserType,jdbcType=VARCHAR}, #{browserVersion,jdbcType=VARCHAR}, #{contact,jdbcType=VARCHAR}, 
+      #{createTime,jdbcType=BIGINT}, #{ipaddr,jdbcType=VARCHAR}, #{lat,jdbcType=DOUBLE}, 
+      #{lng,jdbcType=DOUBLE}, #{os,jdbcType=VARCHAR}, #{osType,jdbcType=VARCHAR}, #{osVersion,jdbcType=VARCHAR}, 
+      #{area,jdbcType=VARCHAR}, #{province,jdbcType=VARCHAR}, #{region,jdbcType=VARCHAR}, 
+      #{referrer,jdbcType=VARCHAR}, #{resourceid,jdbcType=VARCHAR}, #{score,jdbcType=REAL}, 
       #{title,jdbcType=VARCHAR}, #{url,jdbcType=VARCHAR}, #{userid,jdbcType=VARCHAR}, 
       #{userAgent,jdbcType=VARCHAR}, #{clientLang,jdbcType=VARCHAR}, #{content,jdbcType=LONGVARCHAR}
       )
@@ -180,9 +180,6 @@
       </if>
       <if test="account != null">
         account,
-      </if>
-      <if test="area != null">
-        area,
       </if>
       <if test="browser != null">
         browser,
@@ -217,14 +214,17 @@
       <if test="osVersion != null">
         os_version,
       </if>
+      <if test="area != null">
+        area,
+      </if>
       <if test="province != null">
         province,
       </if>
-      <if test="referrer != null">
-        referrer,
-      </if>
       <if test="region != null">
         region,
+      </if>
+      <if test="referrer != null">
+        referrer,
       </if>
       <if test="resourceid != null">
         resourceid,
@@ -257,9 +257,6 @@
       </if>
       <if test="account != null">
         #{account,jdbcType=VARCHAR},
-      </if>
-      <if test="area != null">
-        #{area,jdbcType=VARCHAR},
       </if>
       <if test="browser != null">
         #{browser,jdbcType=VARCHAR},
@@ -294,14 +291,17 @@
       <if test="osVersion != null">
         #{osVersion,jdbcType=VARCHAR},
       </if>
+      <if test="area != null">
+        #{area,jdbcType=VARCHAR},
+      </if>
       <if test="province != null">
         #{province,jdbcType=VARCHAR},
       </if>
-      <if test="referrer != null">
-        #{referrer,jdbcType=VARCHAR},
-      </if>
       <if test="region != null">
         #{region,jdbcType=VARCHAR},
+      </if>
+      <if test="referrer != null">
+        #{referrer,jdbcType=VARCHAR},
       </if>
       <if test="resourceid != null">
         #{resourceid,jdbcType=VARCHAR},
@@ -344,9 +344,6 @@
       <if test="record.account != null">
         account = #{record.account,jdbcType=VARCHAR},
       </if>
-      <if test="record.area != null">
-        area = #{record.area,jdbcType=VARCHAR},
-      </if>
       <if test="record.browser != null">
         browser = #{record.browser,jdbcType=VARCHAR},
       </if>
@@ -380,14 +377,17 @@
       <if test="record.osVersion != null">
         os_version = #{record.osVersion,jdbcType=VARCHAR},
       </if>
+      <if test="record.area != null">
+        area = #{record.area,jdbcType=VARCHAR},
+      </if>
       <if test="record.province != null">
         province = #{record.province,jdbcType=VARCHAR},
       </if>
-      <if test="record.referrer != null">
-        referrer = #{record.referrer,jdbcType=VARCHAR},
-      </if>
       <if test="record.region != null">
         region = #{record.region,jdbcType=VARCHAR},
+      </if>
+      <if test="record.referrer != null">
+        referrer = #{record.referrer,jdbcType=VARCHAR},
       </if>
       <if test="record.resourceid != null">
         resourceid = #{record.resourceid,jdbcType=VARCHAR},
@@ -422,7 +422,6 @@
     update nstr_resource_comment
     set id = #{record.id,jdbcType=BIGINT},
       account = #{record.account,jdbcType=VARCHAR},
-      area = #{record.area,jdbcType=VARCHAR},
       browser = #{record.browser,jdbcType=VARCHAR},
       browser_type = #{record.browserType,jdbcType=VARCHAR},
       browser_version = #{record.browserVersion,jdbcType=VARCHAR},
@@ -434,9 +433,10 @@
       os = #{record.os,jdbcType=VARCHAR},
       os_type = #{record.osType,jdbcType=VARCHAR},
       os_version = #{record.osVersion,jdbcType=VARCHAR},
+      area = #{record.area,jdbcType=VARCHAR},
       province = #{record.province,jdbcType=VARCHAR},
-      referrer = #{record.referrer,jdbcType=VARCHAR},
       region = #{record.region,jdbcType=VARCHAR},
+      referrer = #{record.referrer,jdbcType=VARCHAR},
       resourceid = #{record.resourceid,jdbcType=VARCHAR},
       score = #{record.score,jdbcType=REAL},
       title = #{record.title,jdbcType=VARCHAR},
@@ -453,7 +453,6 @@
     update nstr_resource_comment
     set id = #{record.id,jdbcType=BIGINT},
       account = #{record.account,jdbcType=VARCHAR},
-      area = #{record.area,jdbcType=VARCHAR},
       browser = #{record.browser,jdbcType=VARCHAR},
       browser_type = #{record.browserType,jdbcType=VARCHAR},
       browser_version = #{record.browserVersion,jdbcType=VARCHAR},
@@ -465,9 +464,10 @@
       os = #{record.os,jdbcType=VARCHAR},
       os_type = #{record.osType,jdbcType=VARCHAR},
       os_version = #{record.osVersion,jdbcType=VARCHAR},
+      area = #{record.area,jdbcType=VARCHAR},
       province = #{record.province,jdbcType=VARCHAR},
-      referrer = #{record.referrer,jdbcType=VARCHAR},
       region = #{record.region,jdbcType=VARCHAR},
+      referrer = #{record.referrer,jdbcType=VARCHAR},
       resourceid = #{record.resourceid,jdbcType=VARCHAR},
       score = #{record.score,jdbcType=REAL},
       title = #{record.title,jdbcType=VARCHAR},
@@ -484,9 +484,6 @@
     <set>
       <if test="account != null">
         account = #{account,jdbcType=VARCHAR},
-      </if>
-      <if test="area != null">
-        area = #{area,jdbcType=VARCHAR},
       </if>
       <if test="browser != null">
         browser = #{browser,jdbcType=VARCHAR},
@@ -521,14 +518,17 @@
       <if test="osVersion != null">
         os_version = #{osVersion,jdbcType=VARCHAR},
       </if>
+      <if test="area != null">
+        area = #{area,jdbcType=VARCHAR},
+      </if>
       <if test="province != null">
         province = #{province,jdbcType=VARCHAR},
       </if>
-      <if test="referrer != null">
-        referrer = #{referrer,jdbcType=VARCHAR},
-      </if>
       <if test="region != null">
         region = #{region,jdbcType=VARCHAR},
+      </if>
+      <if test="referrer != null">
+        referrer = #{referrer,jdbcType=VARCHAR},
       </if>
       <if test="resourceid != null">
         resourceid = #{resourceid,jdbcType=VARCHAR},
@@ -560,7 +560,6 @@
   <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.nstr.data.collection.model.pojo.ResourceComment">
     update nstr_resource_comment
     set account = #{account,jdbcType=VARCHAR},
-      area = #{area,jdbcType=VARCHAR},
       browser = #{browser,jdbcType=VARCHAR},
       browser_type = #{browserType,jdbcType=VARCHAR},
       browser_version = #{browserVersion,jdbcType=VARCHAR},
@@ -572,9 +571,10 @@
       os = #{os,jdbcType=VARCHAR},
       os_type = #{osType,jdbcType=VARCHAR},
       os_version = #{osVersion,jdbcType=VARCHAR},
+      area = #{area,jdbcType=VARCHAR},
       province = #{province,jdbcType=VARCHAR},
-      referrer = #{referrer,jdbcType=VARCHAR},
       region = #{region,jdbcType=VARCHAR},
+      referrer = #{referrer,jdbcType=VARCHAR},
       resourceid = #{resourceid,jdbcType=VARCHAR},
       score = #{score,jdbcType=REAL},
       title = #{title,jdbcType=VARCHAR},
@@ -588,7 +588,6 @@
   <update id="updateByPrimaryKey" parameterType="com.nstr.data.collection.model.pojo.ResourceComment">
     update nstr_resource_comment
     set account = #{account,jdbcType=VARCHAR},
-      area = #{area,jdbcType=VARCHAR},
       browser = #{browser,jdbcType=VARCHAR},
       browser_type = #{browserType,jdbcType=VARCHAR},
       browser_version = #{browserVersion,jdbcType=VARCHAR},
@@ -600,9 +599,10 @@
       os = #{os,jdbcType=VARCHAR},
       os_type = #{osType,jdbcType=VARCHAR},
       os_version = #{osVersion,jdbcType=VARCHAR},
+      area = #{area,jdbcType=VARCHAR},
       province = #{province,jdbcType=VARCHAR},
-      referrer = #{referrer,jdbcType=VARCHAR},
       region = #{region,jdbcType=VARCHAR},
+      referrer = #{referrer,jdbcType=VARCHAR},
       resourceid = #{resourceid,jdbcType=VARCHAR},
       score = #{score,jdbcType=REAL},
       title = #{title,jdbcType=VARCHAR},
@@ -615,14 +615,8 @@
   <insert id="insertBatchSelective" parameterType="java.util.List">
     insert into nstr_resource_comment
     <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="list[0].id!=null">
-        id,
-      </if>
       <if test="list[0].account!=null">
         account,
-      </if>
-      <if test="list[0].area!=null">
-        area,
       </if>
       <if test="list[0].browser!=null">
         browser,
@@ -657,14 +651,17 @@
       <if test="list[0].osVersion!=null">
         os_version,
       </if>
+      <if test="list[0].area!=null">
+        area,
+      </if>
       <if test="list[0].province!=null">
         province,
       </if>
-      <if test="list[0].referrer!=null">
-        referrer,
-      </if>
       <if test="list[0].region!=null">
         region,
+      </if>
+      <if test="list[0].referrer!=null">
+        referrer,
       </if>
       <if test="list[0].resourceid!=null">
         resourceid,
@@ -694,14 +691,8 @@
      values 
     <foreach collection="list" index="index" item="item" separator=",">
       <trim prefix=" (" suffix=")" suffixOverrides=",">
-        <if test="item.id!=null">
-          #{item.id,jdbcType=BIGINT},
-        </if>
         <if test="item.account!=null">
           #{item.account,jdbcType=VARCHAR},
-        </if>
-        <if test="item.area!=null">
-          #{item.area,jdbcType=VARCHAR},
         </if>
         <if test="item.browser!=null">
           #{item.browser,jdbcType=VARCHAR},
@@ -736,14 +727,17 @@
         <if test="item.osVersion!=null">
           #{item.osVersion,jdbcType=VARCHAR},
         </if>
+        <if test="item.area!=null">
+          #{item.area,jdbcType=VARCHAR},
+        </if>
         <if test="item.province!=null">
           #{item.province,jdbcType=VARCHAR},
         </if>
-        <if test="item.referrer!=null">
-          #{item.referrer,jdbcType=VARCHAR},
-        </if>
         <if test="item.region!=null">
           #{item.region,jdbcType=VARCHAR},
+        </if>
+        <if test="item.referrer!=null">
+          #{item.referrer,jdbcType=VARCHAR},
         </if>
         <if test="item.resourceid!=null">
           #{item.resourceid,jdbcType=VARCHAR},
@@ -772,15 +766,70 @@
       </trim>
     </foreach>
   </insert>
+  <insert id="insertBatch" parameterType="java.util.List">
+    insert into nstr_resource_comment
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      `account`,
+      `browser`,
+      `browser_type`,
+      `browser_version`,
+      `contact`,
+      `create_time`,
+      `ipaddr`,
+      `lat`,
+      `lng`,
+      `os`,
+      `os_type`,
+      `os_version`,
+      `area`,
+      `province`,
+      `region`,
+      `referrer`,
+      `resourceid`,
+      `score`,
+      `title`,
+      `url`,
+      `userid`,
+      `user_agent`,
+      `client_lang`,
+      `content`,
+    </trim>
+     values 
+    <foreach collection="list" index="index" item="item" separator=",">
+      <trim prefix=" (" suffix=")" suffixOverrides=",">
+        #{item.account,jdbcType=VARCHAR},
+        #{item.browser,jdbcType=VARCHAR},
+        #{item.browserType,jdbcType=VARCHAR},
+        #{item.browserVersion,jdbcType=VARCHAR},
+        #{item.contact,jdbcType=VARCHAR},
+        #{item.createTime,jdbcType=BIGINT},
+        #{item.ipaddr,jdbcType=VARCHAR},
+        #{item.lat,jdbcType=DOUBLE},
+        #{item.lng,jdbcType=DOUBLE},
+        #{item.os,jdbcType=VARCHAR},
+        #{item.osType,jdbcType=VARCHAR},
+        #{item.osVersion,jdbcType=VARCHAR},
+        #{item.area,jdbcType=VARCHAR},
+        #{item.province,jdbcType=VARCHAR},
+        #{item.region,jdbcType=VARCHAR},
+        #{item.referrer,jdbcType=VARCHAR},
+        #{item.resourceid,jdbcType=VARCHAR},
+        #{item.score,jdbcType=REAL},
+        #{item.title,jdbcType=VARCHAR},
+        #{item.url,jdbcType=VARCHAR},
+        #{item.userid,jdbcType=VARCHAR},
+        #{item.userAgent,jdbcType=VARCHAR},
+        #{item.clientLang,jdbcType=VARCHAR},
+        #{item.content,jdbcType=LONGVARCHAR},
+      </trim>
+    </foreach>
+  </insert>
   <update id="updateBatchByPrimaryKeySelective" parameterType="java.util.List">
     <foreach collection="list" index="index" item="item" separator=";">
       update nstr_resource_comment
       <set>
         <if test="item.account!=null">
           account=#{item.account,jdbcType=VARCHAR},
-        </if>
-        <if test="item.area!=null">
-          area=#{item.area,jdbcType=VARCHAR},
         </if>
         <if test="item.browser!=null">
           browser=#{item.browser,jdbcType=VARCHAR},
@@ -815,14 +864,17 @@
         <if test="item.osVersion!=null">
           os_version=#{item.osVersion,jdbcType=VARCHAR},
         </if>
+        <if test="item.area!=null">
+          area=#{item.area,jdbcType=VARCHAR},
+        </if>
         <if test="item.province!=null">
           province=#{item.province,jdbcType=VARCHAR},
         </if>
-        <if test="item.referrer!=null">
-          referrer=#{item.referrer,jdbcType=VARCHAR},
-        </if>
         <if test="item.region!=null">
           region=#{item.region,jdbcType=VARCHAR},
+        </if>
+        <if test="item.referrer!=null">
+          referrer=#{item.referrer,jdbcType=VARCHAR},
         </if>
         <if test="item.resourceid!=null">
           resourceid=#{item.resourceid,jdbcType=VARCHAR},

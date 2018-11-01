@@ -12,9 +12,6 @@ import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
-/**
- * 需要改造，因为表名称不是固定的
- */
 public interface HistoryCommentMapper {
     /**
      *
@@ -101,6 +98,8 @@ public interface HistoryCommentMapper {
     int updateByPrimaryKey(HistoryComment record);
 
     int insertBatchSelective(List<HistoryComment> records);
+
+    int insertBatch(List<HistoryComment> records);
 
     int updateBatchByPrimaryKeySelective(List<HistoryComment> records);
 }

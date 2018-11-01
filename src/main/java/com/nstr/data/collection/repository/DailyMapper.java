@@ -81,5 +81,7 @@ public interface DailyMapper {
 
     int insertBatchSelective(List<Daily> records);
 
+    int insertBatch(List<Daily> records);
+
     int updateBatchByPrimaryKeySelective(List<Daily> records);
 }

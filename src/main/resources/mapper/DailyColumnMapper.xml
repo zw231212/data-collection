@@ -95,7 +95,7 @@
     </if>
   </select>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
-    select 
+    select
     <include refid="Base_Column_List" />
     from nstr_daily_column
     where id = #{id,jdbcType=INTEGER}
@@ -214,13 +214,13 @@
   <update id="updateByExample" parameterType="map">
     update nstr_daily_column
     set id = #{record.id,jdbcType=INTEGER},
-      account = #{record.account,jdbcType=VARCHAR},
-      `day` = #{record.day,jdbcType=VARCHAR},
-      `value` = #{record.value,jdbcType=INTEGER},
-      create_time = #{record.createTime,jdbcType=BIGINT},
-      `name` = #{record.name,jdbcType=VARCHAR},
-      `type` = #{record.type,jdbcType=VARCHAR},
-      avg_score = #{record.avgScore,jdbcType=REAL}
+    account = #{record.account,jdbcType=VARCHAR},
+    `day` = #{record.day,jdbcType=VARCHAR},
+    `value` = #{record.value,jdbcType=INTEGER},
+    create_time = #{record.createTime,jdbcType=BIGINT},
+    `name` = #{record.name,jdbcType=VARCHAR},
+    `type` = #{record.type,jdbcType=VARCHAR},
+    avg_score = #{record.avgScore,jdbcType=REAL}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -266,9 +266,6 @@
   <insert id="insertBatchSelective" parameterType="java.util.List">
     insert into nstr_daily_column
     <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="list[0].id!=null">
-        id,
-      </if>
       <if test="list[0].account!=null">
         account,
       </if>
@@ -291,12 +288,9 @@
         avg_score,
       </if>
     </trim>
-     values 
+    values
     <foreach collection="list" index="index" item="item" separator=",">
       <trim prefix=" (" suffix=")" suffixOverrides=",">
-        <if test="item.id!=null">
-          #{item.id,jdbcType=INTEGER},
-        </if>
         <if test="item.account!=null">
           #{item.account,jdbcType=VARCHAR},
         </if>
@@ -318,6 +312,30 @@
         <if test="item.avgScore!=null">
           #{item.avgScore,jdbcType=REAL},
         </if>
+      </trim>
+    </foreach>
+  </insert>
+  <insert id="insertBatch" parameterType="java.util.List">
+    insert into nstr_daily_column
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      `account`,
+      `day`,
+      `value`,
+      `create_time`,
+      `name`,
+      `type`,
+      `avg_score`,
+    </trim>
+    values
+    <foreach collection="list" index="index" item="item" separator=",">
+      <trim prefix=" (" suffix=")" suffixOverrides=",">
+        #{item.account,jdbcType=VARCHAR},
+        #{item.day,jdbcType=VARCHAR},
+        #{item.value,jdbcType=INTEGER},
+        #{item.createTime,jdbcType=BIGINT},
+        #{item.name,jdbcType=VARCHAR},
+        #{item.type,jdbcType=VARCHAR},
+        #{item.avgScore,jdbcType=REAL},
       </trim>
     </foreach>
   </insert>
@@ -347,7 +365,7 @@
           avg_score=#{item.avgScore,jdbcType=REAL},
         </if>
       </set>
-      where 
+      where
       id = #{item.id,jdbcType=INTEGER}
     </foreach>
   </update>

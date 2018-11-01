@@ -669,9 +669,6 @@
   <insert id="insertBatchSelective" parameterType="java.util.List">
     insert into nstr_resource_comment_2018_11
     <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="list[0].id!=null">
-        id,
-      </if>
       <if test="list[0].account!=null">
         account,
       </if>
@@ -757,9 +754,6 @@
      values 
     <foreach collection="list" index="index" item="item" separator=",">
       <trim prefix=" (" suffix=")" suffixOverrides=",">
-        <if test="item.id!=null">
-          #{item.id,jdbcType=BIGINT},
-        </if>
         <if test="item.account!=null">
           #{item.account,jdbcType=VARCHAR},
         </if>
@@ -841,6 +835,70 @@
         <if test="item.content!=null">
           #{item.content,jdbcType=LONGVARCHAR},
         </if>
+      </trim>
+    </foreach>
+  </insert>
+  <insert id="insertBatch" parameterType="java.util.List">
+    insert into nstr_resource_comment_2018_11
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      `account`,
+      `browser`,
+      `browser_type`,
+      `browser_version`,
+      `contact`,
+      `create_time`,
+      `ipaddr`,
+      `lat`,
+      `lng`,
+      `os`,
+      `os_type`,
+      `os_version`,
+      `area`,
+      `province`,
+      `region`,
+      `referrer`,
+      `resourceid`,
+      `score`,
+      `title`,
+      `url`,
+      `userid`,
+      `user_agent`,
+      `client_lang`,
+      `generation_time`,
+      `table_name`,
+      `gid`,
+      `content`,
+    </trim>
+     values 
+    <foreach collection="list" index="index" item="item" separator=",">
+      <trim prefix=" (" suffix=")" suffixOverrides=",">
+        #{item.account,jdbcType=VARCHAR},
+        #{item.browser,jdbcType=VARCHAR},
+        #{item.browserType,jdbcType=VARCHAR},
+        #{item.browserVersion,jdbcType=VARCHAR},
+        #{item.contact,jdbcType=VARCHAR},
+        #{item.createTime,jdbcType=BIGINT},
+        #{item.ipaddr,jdbcType=VARCHAR},
+        #{item.lat,jdbcType=DOUBLE},
+        #{item.lng,jdbcType=DOUBLE},
+        #{item.os,jdbcType=VARCHAR},
+        #{item.osType,jdbcType=VARCHAR},
+        #{item.osVersion,jdbcType=VARCHAR},
+        #{item.area,jdbcType=VARCHAR},
+        #{item.province,jdbcType=VARCHAR},
+        #{item.region,jdbcType=VARCHAR},
+        #{item.referrer,jdbcType=VARCHAR},
+        #{item.resourceid,jdbcType=VARCHAR},
+        #{item.score,jdbcType=REAL},
+        #{item.title,jdbcType=VARCHAR},
+        #{item.url,jdbcType=VARCHAR},
+        #{item.userid,jdbcType=VARCHAR},
+        #{item.userAgent,jdbcType=VARCHAR},
+        #{item.clientLang,jdbcType=VARCHAR},
+        #{item.generationTime,jdbcType=TIMESTAMP},
+        #{item.tableName,jdbcType=VARCHAR},
+        #{item.gid,jdbcType=VARCHAR},
+        #{item.content,jdbcType=LONGVARCHAR},
       </trim>
     </foreach>
   </insert>

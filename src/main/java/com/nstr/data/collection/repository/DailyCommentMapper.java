@@ -99,5 +99,7 @@ public interface DailyCommentMapper {
 
     int insertBatchSelective(List<DailyComment> records);
 
+    int insertBatch(List<DailyComment> records);
+
     int updateBatchByPrimaryKeySelective(List<DailyComment> records);
 }
