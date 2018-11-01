@@ -2,7 +2,6 @@ package com.nstr.data.collection;
 
 import com.nstr.data.collection.config.AppConstant;
 import com.nstr.data.collection.model.CollectionData;
-import com.nstr.data.collection.model.pojo.ResourceComment;
 import com.nstr.data.collection.service.ResourceCommentService;
 import com.nstr.data.collection.util.IPAddressUtil;
 import com.nstr.data.collection.util.JSONUtil;

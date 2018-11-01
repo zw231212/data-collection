@@ -16,8 +16,9 @@
         <context:exclude-filter type="annotation" expression="org.springframework.web.bind.annotation.RestController" />
     </context:component-scan>
 
+
     <!-- 1. 配置数据源 -->
-    <context:property-placeholder location="classpath:db.properties" />
+    <context:property-placeholder location="classpath:app.properties" />
 
     <!--2. 数据库连接池-->
     <!-- Hikari Datasource -->
@@ -26,7 +27,7 @@
         <property name="jdbcUrl" value="${jdbc.url}" />
         <property name="username" value="${jdbc.username}" />
         <property name="password" value="${jdbc.password}" />
-        
+
         <!-- 连接只读数据库时配置为true， 保证安全 -->
         <property name="readOnly" value="false" />
         <!-- 等待连接池分配连接的最大时长（毫秒），超过这个时长还没可用的连接则发生SQLException， 缺省:30秒 -->
@@ -58,4 +59,7 @@
 
     <!-- 启动对@AspectJ（面向切面）注解的支持 -->
     <aop:aspectj-autoproxy />
+
+    <!--包括其他部分-->
+    <import resource="spring-task.xml" />
 </beans>

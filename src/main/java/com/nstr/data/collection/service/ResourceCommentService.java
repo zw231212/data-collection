@@ -15,6 +15,7 @@ public interface ResourceCommentService {
   ResourceComment save(CollectionData collectionData, String type);
 
   ResourceComment findOne(Long id);
+  void delete(Long begin, long end);
 
   PageInfo<ResourceComment> findPage(String account, String resourceid, String userid, Integer number, Integer size);
 }

@@ -22,6 +22,8 @@ public class RepositoryTest {
 
     @Resource
     private HistoryCommentMapper historyCommentMapper;
+    @Resource
+    private CommonMapper commonMapper;
 
     @Test
     public void test(){
@@ -39,7 +41,14 @@ public class RepositoryTest {
 
     @Test
     public void testCreateTable(){
-        historyCommentMapper.create(TableUtil.generateTableName("", "month"));
+        commonMapper.createBackUpTable(TableUtil.generateTableName("", "month"));
     }
 
+    @Test
+    public void testExists(){
+        List<String> t1 = commonMapper.exists("nstr_resource_comment");
+        List<String> t2= commonMapper.exists("nstr_resource_c");
+        System.out.println(t1);
+        System.out.println(t2);
+    }
 }

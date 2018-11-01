@@ -2,30 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.nstr.data.collection.repository.HistoryCommentMapper">
 
-    <update id="transferData">
-        INSERT INTO `${tableName}`(
-              id, account, area,
-              browser, browser_type, browser_version,
-              contact, create_time, ipaddr,
-              lat, lng, os, os_type,
-              os_version, province, referrer,
-              region, resourceid, score,
-              title, url, userid,
-              user_agent, client_lang, content,
-              generation_time, `table_name`,gid
-        )
-        SELECT id, account, area,
-              browser, browser_type, browser_version,
-              contact, create_time, ipaddr,
-              lat, lng, os, os_type,
-              os_version, province, referrer,
-              region, resourceid, score,
-              title, url, userid,
-              user_agent, client_lang, content,now() as generation_time,
-              `${tableName}` as table_name,CONCAT(`${tableName}`,'_',id) as gid
-        FROM nstr_resource_comment
-        WHERE create_time between #{begin} AND #{end}
-    </update>
+
 
   <update id="create" parameterType="String">
       CREATE TABLE `${tableName}` (

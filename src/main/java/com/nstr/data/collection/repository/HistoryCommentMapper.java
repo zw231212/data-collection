@@ -12,9 +12,7 @@ import java.util.Date;
 
 public interface HistoryCommentMapper {
 
-    void create(@Param("tableName") String tableName);
 
-    void transferData(@Param("begin") long begin, @Param("end") long end,
-                      @Param("generationTime") Date generationTime,
-                      @Param("tableName") String tableName);
+
+
 }
