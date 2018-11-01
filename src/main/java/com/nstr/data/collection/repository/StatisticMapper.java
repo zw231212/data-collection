@@ -17,7 +17,7 @@ public interface StatisticMapper {
     @Select("SELECT account,count(id) as value," +
             "DATE_FORMAT(FROM_UNIXTIME(create_time/1000,'%Y%m%d'),'%Y%m%d') as day," +
             "avg(score) as avg_score," +
-            "min(score) as min_score  " +
+            "min(score) as min_score, UNIX_TIMESTAMP(now())*1000 create_time  " +
             "from nstr_resource_comment " +
             "GROUP BY account,day")
     List<Daily> commonStatic();
@@ -28,7 +28,8 @@ public interface StatisticMapper {
      * @return
      */
     @Select("SELECT account,count(id) as value,${column} as name,'${column}' as type, avg(score) as avg_score," +
-            "DATE_FORMAT(FROM_UNIXTIME(create_time/1000,'%Y%m%d'),'%Y%m%d') as day " +
+            "DATE_FORMAT(FROM_UNIXTIME(create_time/1000,'%Y%m%d'),'%Y%m%d') as day, " +
+            "UNIX_TIMESTAMP(now())*1000 create_time  " +
             "FROM nstr_resource_comment " +
             "GROUP BY account,day,${column}")
     List<DailyColumn> columnStatic(@Param("column") String column);

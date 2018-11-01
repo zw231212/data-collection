@@ -153,4 +153,17 @@ public class Daily {
     public void setAvgScore(Float avgScore) {
         this.avgScore = avgScore;
     }
+
+    @Override
+    public String toString() {
+        return "Daily{" +
+                "id=" + id +
+                ", account='" + account + '\'' +
+                ", day='" + day + '\'' +
+                ", value=" + value +
+                ", createTime=" + createTime +
+                ", minScore=" + minScore +
+                ", avgScore=" + avgScore +
+                '}';
+    }
 }

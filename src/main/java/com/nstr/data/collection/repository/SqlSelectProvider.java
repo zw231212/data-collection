@@ -20,7 +20,8 @@ public class SqlSelectProvider {
         }
         String sql = "SELECT account,count(id) as value,${column} as name,'${column}' as type, " +
                 "avg(score) as avg_score," +
-                "DATE_FORMAT(FROM_UNIXTIME(create_time/1000,'%Y%m%d'),'%Y%m%d') as day " +
+                "DATE_FORMAT(FROM_UNIXTIME(create_time/1000,'%Y%m%d'),'%Y%m%d') as day," +
+                "UNIX_TIMESTAMP(now())*1000 create_time   " +
                 "FROM nstr_resource_comment " +
                 "GROUP BY account,day,${column}";
 
