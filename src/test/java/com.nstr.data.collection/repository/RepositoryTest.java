@@ -1,6 +1,7 @@
 package com.nstr.data.collection.repository;
 
 import com.nstr.data.collection.model.pojo.Daily;
+import com.nstr.data.collection.model.pojo.DailyColumn;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
@@ -22,6 +23,14 @@ public class RepositoryTest {
     public void test(){
         List<Daily> dailies = statisticMapper.commonStatic();
         System.out.println(dailies);
+    }
+
+    @Test
+    public void testArea(){
+        List<DailyColumn> columns = statisticMapper.areaStatic("area");
+        for (DailyColumn dailyColumn : columns) {
+            System.out.println(dailyColumn);
+        }
     }
 
 }
