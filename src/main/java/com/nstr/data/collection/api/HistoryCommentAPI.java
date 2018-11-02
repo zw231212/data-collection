@@ -17,7 +17,7 @@ import javax.annotation.Resource;
  * HistoryComment只是增加了几个字段：generation_time,table_name,gid
  */
 @RestController
-@RequestMapping("/comments/history-comment")
+@RequestMapping("/comments/history")
 public class HistoryCommentAPI {
 
     @Resource

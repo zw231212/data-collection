@@ -27,7 +27,7 @@ public class DailyColumnAPI {
   public APIResponse findPage(
          @RequestParam(value = "account") String account,//账户id
          @RequestParam(value = "begin") String begin,//日期开始时间
-         @RequestParam(value = "offset",required = false,defaultValue = "1") Integer offset,//日期偏移量
+         @RequestParam(value = "offset",required = false,defaultValue = "0") Integer offset,//日期偏移量
          @RequestParam(value = "type",required = false,defaultValue = "day") String type,//日期类型
          @RequestParam(value = "columns",required = false,defaultValue = "") String columnsStr,//要查询的列
          @RequestParam(value = "sort",required = false,defaultValue = "value DESC") String sort,//排序信息

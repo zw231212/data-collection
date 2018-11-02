@@ -117,3 +117,130 @@ nstrdata-collection
 ![系统评论页面](./screenshots/信息提交与嵌入diamante展示.png)
 ![一些说明信息](./screenshots/一些说明.png)
 ![api信息查看与交互](./screenshots/api信息查看.png)
+
+
+API
+----
+返回的数据的格式是：
+```json
+{
+"meta":{
+"code":30001,
+"msg":""
+},
+"body":{},
+"costTimeMillis":0
+}
+```
+其中返回码是30001的表示是正确的，body里面是查询返回的数据
+```js
+var baseDomain = "http://localhost:8082";
+var apis = [
+      {
+        "name":"获取本次备份周期内的评论分页数据，暂定是一月备份一次",
+        "api":baseDomain+"/comments/resources/list",
+        "method":"get/post",
+        "params":{//请求参数
+          "account":"必须，平台id信息，在埋点的时候确认的唯一的标识符",
+          "resourceid":"可选，资源的id",
+          "userid":"可选，用户的id",
+          "number":"可选，int类型，默认0，分页页码",
+          "size":"可选，int类型，默认10，分页大小",
+        },
+        "fields":{  //返回数据，分页信息，下面的content内容，其他字段不做解释，
+            // 评论数据的详细解释见上面，这里不写第二遍
+        }
+      },
+      {
+              "name":"获取资源评论的详细数据，这里包含content，上面的分页请求不包含content，这里没有对account进行验证",
+              "api":baseDomain+"/comments/resources/detail/{id}/get",
+              "method":"get/post",
+              "params":{//请求参数
+                "id":"资源的id，在path里面"
+              },
+              "fields":{  //返回数据一条评论的详细信息，下面的content内容，其他字段不做解释，
+                  // 评论数据的详细解释见上面，这里不写第二遍
+              }
+      },
+        {
+              "name":"获取每日每月或者每年的资源评论基本的统计数据",
+              "api":baseDomain+"/comments/daily/list",
+              "params":{//请求参数
+                    "account":"必须，平台id信息，在埋点的时候确认的唯一的标识符",
+                    "number":"可选，int类型，默认0，分页页码",
+                    "size":"可选，int类型，默认10，分页大小",
+                    "begin":"必须，参数说明：年份，XXXX四位数字来表示,month," +
+                                "月份，不足的用0来补足,day，日期，不足2位的用0来补足，" +
+                                 "这里的参数是年份+月份+日期，字符串类型，中间使用横杆“-”来分割",
+                    "offset":"可选偏移量，也就是偏移当前月份、年份或者天数多少，整数，从0开始",
+                    "type":"时间类型，每年每月或者每日，分别为year，month,day",
+                    "sort":"排序参数，形式为：value DESC(这是默认)等",
+              },
+              "fields":{  //返回数据，分页数据
+                "id":"id",
+                "account":"account账号",
+                "day":"统计日期，格式为yyyyMMdd",
+                "value":"当天评论的数量",
+                "createTime":"此条信息创建时间,long 类型",
+                "minScore":"当天评论里的最低分数",
+                "avgScore":"当天评论的平均分数",
+              }
+            },
+            {
+                          "name":"获取每日每月或者每年的资源评论列统计数据，这里的列是数据评论的详情里面的列，" +
+                           "统计哪些列是在配置文件里面可以配置的，默认的有：" +
+                            "browser：浏览器, browser_type：浏览器类型,os：操作系统, os_type：操作系统类型, " +
+                             "area：国家或者地区, province：省份, region：区县或者城市, " +
+                              "resourceid：资源的id, userid：用户的id",
+                          "remark":"多列的统计暂时没做",
+                          "api":baseDomain+"/comments/daily-columns/list",
+                          "params":{//请求参数
+                                "account":"必须，平台id信息，在埋点的时候确认的唯一的标识符",
+                                "number":"可选，int类型，默认0，分页页码",
+                                "size":"可选，int类型，默认10，分页大小",
+                                "begin":"必须，参数说明：年份，XXXX四位数字来表示,month," +
+                                            "月份，不足的用0来补足,day，日期，不足2位的用0来补足，" +
+                                             "这里的参数是年份+月份+日期，字符串类型，中间使用横杆“-”来分割",
+                                "offset":"可选偏移量，也就是偏移当前月份、年份或者天数多少，整数，从0开始",
+                                "type":"时间类型，每年每月或者每日，分别为year，month,day",
+                                "sort":"排序参数，形式为：value DESC(这是默认)等",
+                                "columns":"可选，默认无不筛选，指定要查询的数据的列，列与列之间通过“-”来连接",
+                          },
+                          "fields":{  //返回数据，分页数据
+                            "id":"id",
+                            "account":"account账号",
+                            "day":"统计日期，格式为yyyyMMdd",
+                            "value":"当天评论的数量",
+                            "createTime":"此条信息创建时间,long 类型",
+                            "name":"列的具体数据，比如统计的列是os，那么name就有可能是windows，Linux等",
+                            "type":"查询的列的类型，就是统计的列",
+                            "avgScore":"列数据的平均分数",
+                          }
+            },
+            {
+                          "name":"获取每日每月或者每年的资源评论评论内容的分词数据",
+                          "api":baseDomain+"/comments/daily-comments/list",
+                          "params":{//请求参数
+                                "account":"必须，平台id信息，在埋点的时候确认的唯一的标识符",
+                                "number":"可选，int类型，默认0，分页页码",
+                                "size":"可选，int类型，默认10，分页大小",
+                                "begin":"必须，参数说明：年份，XXXX四位数字来表示,month," +
+                                            "月份，不足的用0来补足,day，日期，不足2位的用0来补足，" +
+                                             "这里的参数是年份+月份+日期，字符串类型，中间使用横杆“-”来分割",
+                                "offset":"可选偏移量，也就是偏移当前月份、年份或者天数多少，整数，从0开始",
+                                "type":"时间类型，每年每月或者每日，分别为year，month,day",
+                                "sort":"排序参数，形式为：value DESC(这是默认)等",
+                          },
+                          "fields":{  //返回数据，分页数据
+                            "id":"id",
+                            "account":"account账号",
+                            "day":"统计日期，格式为yyyyMMdd",
+                            "value":"当天评论的数量",
+                            "createTime":"此条信息创建时间,long 类型",
+                            "tags":"分词数据，string类型，里面的数据是json格式，" +
+                             "是list，[{name:'词',value:'词频'}]",
+                          }
+                        },
+    ]
+
+```

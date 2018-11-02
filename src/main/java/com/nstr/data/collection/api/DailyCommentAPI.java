@@ -17,7 +17,7 @@ import javax.annotation.Resource;
 import java.util.List;
 
 @RestController
-@RequestMapping("/comments/daily-comment")
+@RequestMapping("/comments/daily-comments")
 public class DailyCommentAPI {
 
   @Resource
@@ -28,7 +28,7 @@ public class DailyCommentAPI {
   public APIResponse findPage( //这里的寻找应该是要通用的，先不写那么多
       @RequestParam(value = "account") String account,
       @RequestParam(value = "begin") String begin,
-      @RequestParam(value = "offset",required = false,defaultValue = "1") Integer offset,
+      @RequestParam(value = "offset",required = false,defaultValue = "0") Integer offset,
       @RequestParam(value = "type",required = false,defaultValue = "day") String type,
       @RequestParam(value = "sort",required = false,defaultValue = "value DESC") String sort,
       @RequestParam(value = "number",required = false,defaultValue = "0") Integer number,

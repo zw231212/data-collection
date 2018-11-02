@@ -54,7 +54,7 @@ public class DailyCommentServiceImpl implements DailyCommentService {
         }
         PageHelper.startPage(number, size);
 
-        List<DailyComment> dailies = dailyCommentMapper.selectByExample(example);
+        List<DailyComment> dailies = dailyCommentMapper.selectByExampleWithBLOBs(example);
         return new PageInfo<>(dailies);
     }
 }
