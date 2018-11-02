@@ -13,7 +13,7 @@ public class DailyStatisticTask {
 
     private static final Logger logger = LoggerFactory.getLogger(HistoryCommentTask.class);
 
-    private static final String SCHEDULE_CRON = "0/5 * *  * * ? ";//0/5 * *  * * ? 每5秒执行一次，0 0 0 * * ? *，每天执行一次
+    private static final String SCHEDULE_CRON = "0 0 1 * * ?";//0/5 * *  * * ? 每5秒执行一次，0 0 1 * * ?*，每天凌晨1点执行一次
 
     @Resource
     private StatisticService statisticService;

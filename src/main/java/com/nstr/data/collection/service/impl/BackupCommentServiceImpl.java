@@ -57,7 +57,7 @@ public class BackupCommentServiceImpl implements BackupCommentService {
             //获取上个周期的开始时间和结束时间
             Long[] bes = DateUtil.getLongTypeBeginAndEnd(AppConstant.BACKUP_TYPE, year, month, day);
             commonMapper.transferData(bes[0], bes[1], new Date(), table);
-//            resourceCommentService.delete(bes[0], bes[1]);
+            resourceCommentService.delete(bes[0], bes[1]);
         }else{
             logger.warn("数据库已经存在备份数据表："+table);
         }
