@@ -1,4 +1,5 @@
 (function () {
+  var serverDomain = "http://10.2.2.12:8082";
   var params = {},plugins={},
       comment={
         "score":"", "contact":"",
@@ -87,7 +88,7 @@
     params.userid = userid.value || '';
     var args = dealParams();
     var img = new Image(1, 1);
-    var src = 'http://10.2.2.12:8082/nstr/data/log.gif?ipPlugin='+plugins.ipPlugin+'&args=' + encodeURIComponent(args);
+    var src = serverDomain+'/nstr/data/log.gif?ipPlugin='+plugins.ipPlugin+'&args=' + encodeURIComponent(args);
     //alert(src);
     img.src = src;
   }
