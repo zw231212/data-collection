@@ -28,4 +28,8 @@
     </bean>
      <!-- 访问静态资源 -->
     <mvc:resources location="/static/" mapping="/static/**"/>
+
+    <!-- 全局异常处理 -->
+    <bean id="exceptionHandler" class="com.nstr.data.collection.exception.DefaultGlobalExceptionResolver" />
+
 </beans>
