@@ -11,3 +11,4 @@ out/**
 */classes/**
 */out/**
 */node_modules/**
+*/library/*.txt

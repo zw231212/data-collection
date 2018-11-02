@@ -213,4 +213,20 @@ public class StringUtil {
         return false;
     }
 
+    public static void main(String[] args) {
+        String content="通过扩展测地线的定义,把鞋楦围长测量问题转化为求解鞋楦曲面上带宽度属性的测地线问题." +
+                "首先以传统测地线为初始曲线在鞋楦曲面上构造具有一定宽度的子曲面,对子曲面进行离散点采样并构造" +
+                "弹簧质点系统;用带曲面约束的弹簧质点系统的运动能量作为子曲面的运动能量,再基于迭代优化的方法" +
+                "最小化子曲面能量,基于测地线思想计算出的鞋楦表面最短路径即为鞋楦围长;此外,对耗时较多的曲面" +
+                "约束计算采用GPU并行加速,进一步缩短了计算时间.实验结果表明,鞋楦围长测量结果达到了行业精度要求.";
+        String term = "曲面";
+        String[] split = content.split(term);
+        System.out.println(split.length);
+        int i = wordCount(content, term);
+        System.out.println(i);
+        String info = "教授/博导、研究员 高级工程师";
+        Set<String> strings = splitKeyword(info);
+        System.out.println(strings);
+    }
+
 }
