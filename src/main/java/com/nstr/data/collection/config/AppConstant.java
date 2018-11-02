@@ -31,6 +31,7 @@ public class AppConstant {
   public static final String BACKUP_HISTORY_COMMENT = AppPropLoader.get("schedule.backupHistoryComment");
   public static final String BACKUP_TYPE = AppPropLoader.get("backup.type");
   public static List<String> backupTypes= Arrays.asList("month", "week");
+  public static int DEFAULT_TAG_SIZE = 20;
 
   static {
     //要统计哪些列信息
@@ -42,6 +43,11 @@ public class AppConstant {
       }
       s = s.trim().toLowerCase();
       statisticColumns.add(s);
+    }
+
+    String s = AppPropLoader.get("tags.defaultSize");
+    if(!StringUtil.isNullOrBlank(s)){
+      DEFAULT_TAG_SIZE = Integer.parseInt(s);
     }
   }
 

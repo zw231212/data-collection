@@ -94,6 +94,13 @@ public class ResourceCommentServiceImpl implements ResourceCommentService {
   }
 
   @Override
+  public List<ResourceComment> findByCreateTime(Long begin, long end) {
+    ResourceCommentExample example = new ResourceCommentExample() ;
+    example.createCriteria().andCreateTimeBetween(begin, end);
+    return resourceCommentMapper.selectByExampleWithBLOBs(example);
+  }
+
+  @Override
   public PageInfo<ResourceComment> findPage(String account, String resourceid, String userid,
                                             Integer number, Integer size) {
     if(number < 0){

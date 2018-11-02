@@ -4,6 +4,8 @@ import com.github.pagehelper.PageInfo;
 import com.nstr.data.collection.model.CollectionData;
 import com.nstr.data.collection.model.pojo.ResourceComment;
 
+import java.util.List;
+
 public interface ResourceCommentService {
 
   /**
@@ -22,6 +24,14 @@ public interface ResourceCommentService {
    * @param end
    */
   void delete(Long begin, long end);
+
+  /**
+   * 根据创建时间来查找数据
+   * @param begin
+   * @param end
+   * @return
+   */
+  List<ResourceComment> findByCreateTime(Long begin, long end);
 
   /**
    * 查找这个备份周期的评论数据
