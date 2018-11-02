@@ -30,6 +30,10 @@ public class BackupCommentServiceImpl implements BackupCommentService {
     @Override
     public void backup() {
 
+        /**
+         * 获取上个备份周期的数据，
+         * 一般都是这个月去生成上个月的备份表，或者今天生成昨天的备份表的名称
+         */
         Calendar calendar = Calendar.getInstance();
         int year = calendar.get(Calendar.YEAR);
         int month = calendar.get(Calendar.MONTH) + 1;
@@ -45,12 +49,13 @@ public class BackupCommentServiceImpl implements BackupCommentService {
             day = calendar.get(Calendar.DATE);
         }
 
-        //一般都是这个月去生成上个月的备份表，或者今天生成昨天的备份表的名称
+        //获取表名
         String table = TableUtil.generateTableName(AppConstant.COMMENT_TABLE,AppConstant.BACKUP_TYPE);
         List<String> exists = commonMapper.exists(table);
         if(exists == null || exists.size() == 0){
             commonMapper.createBackUpTable(table);
-            Long[] bes = DateUtil.getLongTypeBeginAndEnd(AppConstant.BACKUP_TYPE,year,month,day);
+            //获取上个周期的开始时间和结束时间
+            Long[] bes = DateUtil.getLongTypeBeginAndEnd(AppConstant.BACKUP_TYPE, year, month, day);
             commonMapper.transferData(bes[0], bes[1], new Date(), table);
 //            resourceCommentService.delete(bes[0], bes[1]);
         }else{

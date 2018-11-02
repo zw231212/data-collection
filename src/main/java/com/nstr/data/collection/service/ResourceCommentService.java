@@ -15,7 +15,22 @@ public interface ResourceCommentService {
   ResourceComment save(CollectionData collectionData, String type);
 
   ResourceComment findOne(Long id);
+
+  /**
+   * 根据创建时间来进行删除
+   * @param begin
+   * @param end
+   */
   void delete(Long begin, long end);
 
+  /**
+   * 查找这个备份周期的评论数据
+   * @param account
+   * @param resourceid
+   * @param userid
+   * @param number
+   * @param size
+   * @return
+   */
   PageInfo<ResourceComment> findPage(String account, String resourceid, String userid, Integer number, Integer size);
 }
