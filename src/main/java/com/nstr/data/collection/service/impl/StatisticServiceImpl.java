@@ -40,6 +40,7 @@ public class StatisticServiceImpl implements StatisticService {
         int month = calendar.get(Calendar.MONTH) + 1;
         int day = calendar.get(Calendar.DATE);
         List<String> scs = AppConstant.statisticColumns;
+        //获取开始与结束时间
         Long[] bes = DateUtil.getLongTypeBeginAndEnd("day",year,month,day);
         List<Daily> dailies = statisticMapper.commonStatic(bes[0], bes[1]);
         if(dailies != null && dailies.size() > 0){
@@ -68,7 +69,9 @@ public class StatisticServiceImpl implements StatisticService {
         int year = calendar.get(Calendar.YEAR);
         int month = calendar.get(Calendar.MONTH) + 1;
         int day = calendar.get(Calendar.DATE);
+
         Long[] bes = DateUtil.getLongTypeBeginAndEnd("day",year,month,day);
+
         List<ResourceComment> comments = resourceCommentService.findByCreateTime(bes[0], bes[1]);
         String dayStr = DateUtil.getFormerDate(year + "" + month + "" + day, "yyyyMMdd");
 

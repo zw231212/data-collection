@@ -8,8 +8,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class KeywordsUtil {
+
     private static KeyWordComputer kwc = new KeyWordComputer(8);
 
+    /**
+     * 提取关键词的工具类
+     * @param content
+     * @return
+     */
     public static List<TagField> keywords(String content){
         if(StringUtil.isNullOrBlank(content)){
             return null;
@@ -30,7 +36,6 @@ public class KeywordsUtil {
         if(StringUtil.isNullOrBlank(content)){
             return null;
         }
-
         List<Keyword> list = kwc.computeArticleTfidf(content);
         return list;
     }
