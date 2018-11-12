@@ -5,6 +5,10 @@ import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
 
+/**
+ * 这个最初使用spring-data的时候为了通用而写的model。
+ * 在Daily和DailyColumn、DailyComment这几个表通用的列
+ */
 @Data
 @NoArgsConstructor
 public class BaseModel implements Serializable {
