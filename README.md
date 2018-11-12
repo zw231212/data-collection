@@ -4,13 +4,14 @@ nstrdata-collection
 项目来源
 -----------
   
-    最初的项目来源参考了网络上找的一些代码（具体链接有点久了，忘记了，如果作者想要在这里说明，可以@me）
+    最初的项目来源（埋点的js文件）参考了网络上找的一些代码（具体链接有点久了，忘记了，如果作者想要在这里说明，可以@me）
     
     项目里面的model和mapper部分是根据mybatis-generator()自动生成的（有些统计SQL是自己写的）。
-
+[mybatis-generator](https://github.com/zw231212/mybatis-generator)
+    
     项目里面涉及的sql请联系我获取（项目最终还未成型，对于历史数据的处理还有待处理）。
 
-[mybatis-generator](https://github.com/zw231212/mybatis-generator)
+
 
 项目说明
 -----------
